@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>About Us — Mothers of Hind</title>
+  <meta name="description" content="Mothers of Hind was founded in 2024 by a group of compassionate mothers, doctors and academics united by a mission for hope and humanity." />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%236B2737'/%3E%3Ctext x='50' y='68' font-family='serif' font-size='52' font-style='italic' fill='%23FAF6F0' text-anchor='middle'%3Eh%3C/text%3E%3C/svg%3E" />
+  <style>
+    .values-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--s-5); margin-top: var(--s-7); }
+    .value-card { padding: var(--s-5); background: var(--bg); border-left: 2px solid var(--accent); }
+    .value-card .num { font-family: var(--font-display); font-style: italic; font-size: 2rem; color: var(--accent); font-weight: 400; display: block; margin-bottom: var(--s-2); line-height: 1; }
+    .value-card h4 { font-family: var(--font-display); font-size: 1.15rem; margin-bottom: var(--s-2); font-weight: 500; }
+    .value-card p { font-size: 0.9rem; color: var(--fg-muted); line-height: 1.55; }
+
+    .hind-section { background: var(--clr-wine); color: var(--clr-cream); position: relative; overflow: hidden; }
+    .hind-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(201, 149, 75, 0.12), transparent 60%); pointer-events: none; }
+    .hind-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; position: relative; z-index: 2; }
+    .hind-image { aspect-ratio: 3/4; border-radius: 4px; overflow: hidden; background: linear-gradient(135deg, var(--clr-wine-dark), var(--clr-wine)); position: relative; }
+    .hind-candle { position: absolute; inset: 0; display: grid; place-items: center; }
+    .hind-candle svg { width: 60%; max-width: 280px; opacity: 0.95; }
+    .hind-content p { color: rgba(250, 246, 240, 0.85); line-height: 1.75; font-size: 1.05rem; margin-bottom: var(--s-4); }
+    .hind-content .quote { font-family: var(--font-display); font-size: 1.5rem; font-style: italic; line-height: 1.4; color: var(--clr-amber-light); padding: var(--s-4) 0; border-top: 1px solid rgba(250,246,240,0.15); border-bottom: 1px solid rgba(250,246,240,0.15); margin: var(--s-5) 0; }
+
+    .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-7); align-items: start; }
+    .mission-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); }
+    .pillar { padding: var(--s-4); border: 1px solid var(--clr-border); border-radius: 4px; background: var(--bg); transition: all var(--t-med); }
+    .pillar:hover { background: var(--clr-cream-warm); border-color: var(--accent); }
+    .pillar .icon { width: 38px; height: 38px; border-radius: 50%; background: var(--accent); color: var(--clr-cream); display:grid; place-items:center; margin-bottom: var(--s-3); }
+    .pillar h5 { font-family: var(--font-display); font-size: 1rem; font-weight: 500; line-height: 1.3; }
+
+    .founder-card { padding: var(--s-6) 0; border-bottom: 1px solid var(--clr-border); }
+    .founder-card:last-child { border-bottom: 0; }
+    .founder-grid { display: grid; grid-template-columns: 240px 1fr; gap: var(--s-6); align-items: start; }
+    .founder-portrait { aspect-ratio: 3/4; border-radius: 4px; overflow: hidden; background: var(--clr-paper); position: relative; }
+    .founder-portrait img { width: 100%; height: 100%; object-fit: cover; }
+    .founder-role { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 8px; }
+    .founder-name { font-family: var(--font-display); font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 500; margin-bottom: var(--s-3); line-height: 1.15; }
+    .founder-bio { color: var(--fg-muted); font-size: 0.96rem; line-height: 1.7; }
+    .founder-bio p { margin-bottom: var(--s-3); }
+    .founder-creds { margin-top: var(--s-4); display: flex; flex-wrap: wrap; gap: var(--s-2); }
+    .founder-cred { font-size: 0.72rem; letter-spacing: 0.08em; padding: 4px 10px; border-radius: var(--r-full); background: var(--clr-cream-warm); color: var(--fg); border: 1px solid var(--clr-border); }
+
+    @media (max-width: 768px) {
+      .hind-grid, .mission-grid { grid-template-columns: 1fr; }
+      .founder-grid { grid-template-columns: 1fr; }
+      .founder-portrait { max-width: 240px; }
+      .mission-pillars { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">h</span>
+      <span class="brand-name">Mothers of Hind<small>Hope · Education · Care</small></span>
+    </a>
+    <nav class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="heen.html">HIEN · هيّن</a>
+      <a href="shop.html">Shop</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <a href="donate.html" class="btn btn-primary btn-sm">Donate</a>
+      <button class="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu">
+  <nav class="mobile-menu-list">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="projects.html">Our Projects</a>
+    <a href="heen.html">HIEN · هيّن</a>
+    <a href="shop.html">Shop</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="mobile-menu-cta">
+    <a href="donate.html" class="btn btn-primary btn-lg" style="width:100%;">Donate Now</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-inner reveal">
+      <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><span>About</span></div>
+      <p class="eyebrow"><span class="rule"></span>Who we are</p>
+      <h1 class="display-xl">About <em class="italic-accent text-accent">Mothers of Hind.</em></h1>
+      <p class="page-hero-desc">A non‑profit company (limited by guarantee) founded in 2024 by a group of compassionate professional mothers united by a mission for hope and humanity.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION / VISION -->
+<section class="section" id="whoweare">
+  <div class="container">
+    <div class="mission-grid">
+      <div class="reveal">
+        <p class="eyebrow"><span class="rule"></span>Our Vision</p>
+        <h2 class="display-m" style="margin-bottom: var(--s-4);">A <em class="italic-accent text-accent">global beacon of hope.</em></h2>
+        <p style="color: var(--fg-muted); line-height: 1.75; font-size: 1.05rem; margin-bottom: var(--s-5);">
+          We aspire to be a global beacon of hope, creating opportunities for education, health and well‑being in communities suffering from the devastating effects of war and conflict. Our goal is to help rebuild lives and offer a brighter future for children and families who have endured unimaginable hardship.
+        </p>
+        <p class="eyebrow"><span class="rule"></span>Why We Exist</p>
+        <h3 class="display-s" style="margin-top: var(--s-3); margin-bottom: var(--s-4); max-width: 26em;">No family should endure war without hope for a better tomorrow.</h3>
+        <p style="color: var(--fg-muted); line-height: 1.75;">
+          Mothers of Hind was born from the shared belief that no family should endure the pain of losing loved ones or the devastation of war without hope for a better tomorrow. We exist to restore that hope, standing as a symbol of compassion, unity and resilience for those who need it most.
+        </p>
+      </div>
+
+      <div class="reveal reveal-delay-1" id="ourmission">
+        <p class="eyebrow"><span class="rule"></span>Our Mission</p>
+        <h2 class="display-m" style="margin-bottom: var(--s-5);">An <em class="italic-accent text-accent">anchor</em> for families.</h2>
+        <p style="color: var(--fg-muted); line-height: 1.75; margin-bottom: var(--s-5);">
+          Mothers of Hind aims to act as an anchor facilitating educational, health and well‑being support for children and families in war‑torn areas — guided by humanitarian principles, collaborating with relevant experts and community representatives who share our commitment to preserving life and nurturing human dignity.
+        </p>
+
+        <div class="mission-pillars">
+          <div class="pillar">
+            <div class="icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <h5>Education for children of all ages</h5>
+          </div>
+          <div class="pillar">
+            <div class="icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <h5>Mental & physical well‑being</h5>
+          </div>
+          <div class="pillar">
+            <div class="icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+            </div>
+            <h5>Advocacy & awareness</h5>
+          </div>
+          <div class="pillar">
+            <div class="icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <h5>Sponsorships to rebuild lives</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="values-grid reveal">
+      <div class="value-card">
+        <span class="num">01</span>
+        <h4>Compassion</h4>
+        <p>Led by mothers, for families. We approach every community with the tenderness they deserve.</p>
+      </div>
+      <div class="value-card">
+        <span class="num">02</span>
+        <h4>Collaboration</h4>
+        <p>Nothing is imposed. We work in solidarity with local organisations, experts and community voices.</p>
+      </div>
+      <div class="value-card">
+        <span class="num">03</span>
+        <h4>Dignity</h4>
+        <p>Every programme we build is an act of preserving life, agency and human dignity.</p>
+      </div>
+      <div class="value-card">
+        <span class="num">04</span>
+        <h4>Resilience</h4>
+        <p>We meet trauma honestly and build spaces where healing and learning can co‑exist.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY OF HIND -->
+<section class="hind-section section" id="hind">
+  <div class="container">
+    <div class="hind-grid">
+      <div class="hind-image reveal">
+        <!-- Memorial SVG -->
+        <div class="hind-candle">
+          <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg" fill="none">
+            <!-- Flame -->
+            <path d="M100 30 C 95 45, 85 55, 90 70 C 93 80, 100 82, 100 82 C 100 82, 107 80, 110 70 C 115 55, 105 45, 100 30 Z" fill="#E0B878" opacity="0.9"/>
+            <path d="M100 40 C 97 50, 92 56, 95 66 C 97 72, 100 74, 100 74 C 100 74, 103 72, 105 66 C 108 56, 103 50, 100 40 Z" fill="#FAF6F0" opacity="0.95"/>
+            <!-- Candle body -->
+            <rect x="90" y="80" width="20" height="110" fill="#FAF6F0" opacity="0.9" rx="2"/>
+            <!-- Base -->
+            <ellipse cx="100" cy="200" rx="40" ry="6" fill="#C9954B" opacity="0.6"/>
+            <ellipse cx="100" cy="198" rx="40" ry="4" fill="#FAF6F0" opacity="0.3"/>
+            <!-- Olive branch -->
+            <g transform="translate(20, 210)" fill="#6B7F5C" opacity="0.8">
+              <ellipse cx="20" cy="0" rx="14" ry="5" transform="rotate(-20 20 0)"/>
+              <ellipse cx="38" cy="-4" rx="12" ry="4" transform="rotate(-15 38 -4)"/>
+              <ellipse cx="56" cy="-2" rx="14" ry="5" transform="rotate(-25 56 -2)"/>
+              <ellipse cx="74" cy="-8" rx="12" ry="4" transform="rotate(-18 74 -8)"/>
+              <path d="M 10 5 Q 90 -5, 160 -8" stroke="#6B7F5C" stroke-width="1.2" fill="none" opacity="0.7"/>
+            </g>
+            <!-- name -->
+            <text x="100" y="240" font-family="Fraunces, serif" font-size="18" font-style="italic" fill="#FAF6F0" text-anchor="middle" opacity="0.95">Hind Rajab</text>
+            <text x="100" y="255" font-family="Manrope, sans-serif" font-size="9" fill="#E0B878" text-anchor="middle" letter-spacing="3" opacity="0.7">2018 — 2024</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="hind-content reveal reveal-delay-1">
+        <p class="eyebrow" style="color: var(--clr-amber-light);"><span class="rule" style="background: var(--clr-amber-light);"></span>The story that called us</p>
+        <h2 class="display-l" style="color: var(--clr-cream); margin-bottom: var(--s-5);">
+          A five‑year‑old whose voice <em class="italic-accent" style="color: var(--clr-amber-light);">became ours.</em>
+        </h2>
+
+        <p>Hind Rajab was a five‑year‑old Palestinian girl from Gaza who found herself trapped in a horror no child should ever experience. Her story is one of fear, desperation, and a world that turned its back on her desperate cries for help.</p>
+
+        <p class="quote">"We carry her name so that her voice — and the voices of every child like her — will never be silenced."</p>
+
+        <p>We founded Mothers of Hind because grief alone is not enough. We exist to transform sorrow into schools, silence into advocacy, and loss into a living legacy of learning and care for every child affected by war.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDERS -->
+<section class="section" id="Ourfounders">
+  <div class="container">
+    <div class="section-header reveal" style="text-align: center; margin-left: auto; margin-right: auto;">
+      <p class="eyebrow" style="justify-content: center; display: inline-block;"><span class="rule"></span>Providing hope, building futures</p>
+      <h2 class="display-l">Our <em class="italic-accent text-accent">founders.</em></h2>
+      <p>A diverse group of mothers and professionals with expertise in health and education, united by their passion for humanitarian work.</p>
+    </div>
+
+    <div>
+      <!-- Dr. Abeer Pharaon -->
+      <article class="founder-card reveal">
+        <div class="founder-grid">
+          <div class="founder-portrait">
+            <img src="https://mothersofhind.org/wp-content/uploads/2025/01/1673465980751.jpg" alt="Dr. Abeer Pharaon" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, var(--clr-wine), var(--clr-olive))'; this.parentElement.innerHTML='<div style=&quot;display:grid;place-items:center;height:100%;font-family:var(--font-display);font-size:5rem;font-style:italic;color:var(--clr-cream)&quot;>AP</div>';"/>
+          </div>
+          <div>
+            <div class="founder-role">Founding Trustee · Jerusalem / UK</div>
+            <h3 class="founder-name">Dr. Abeer Pharaon</h3>
+            <div class="founder-bio">
+              <p>Dr. Abeer Pharaon is a distinguished academic, consultant and advocate for social justice with a deep commitment to the rights of Palestinians. Originally from Jerusalem, she has lived in the UK for the past 26 years and has made significant contributions in academia, leadership and community development.</p>
+              <p>She is an Associate Professor at the Business School of Manchester Metropolitan University, specialising in change management and innovation culture, with a PhD from Loughborough University. Beyond academia, she is a LEGO® SERIOUS PLAY® facilitator and has used the methodology to support children and young people in refugee camps in Palestine and Jordan since 2013.</p>
+              <p>As the Founder of the Arab Centre for Entrepreneurship, Innovation and Leadership (ACEIL), she has played a pivotal role in fostering entrepreneurial skills among Arab youth.</p>
+            </div>
+            <div class="founder-creds">
+              <span class="founder-cred">PhD, Change Management</span>
+              <span class="founder-cred">Associate Professor · MMU</span>
+              <span class="founder-cred">LEGO® SERIOUS PLAY® Facilitator</span>
+              <span class="founder-cred">Founder · ACEIL</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Dr. Caroline Evers -->
+      <article class="founder-card reveal">
+        <div class="founder-grid">
+          <div class="founder-portrait">
+            <img src="https://mothersofhind.org/wp-content/uploads/2025/01/1517716613344.jpg" alt="Dr. Caroline Evers" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, var(--clr-olive), var(--clr-amber))'; this.parentElement.innerHTML='<div style=&quot;display:grid;place-items:center;height:100%;font-family:var(--font-display);font-size:5rem;font-style:italic;color:var(--clr-cream)&quot;>CE</div>';"/>
+          </div>
+          <div>
+            <div class="founder-role">Founding Trustee · Jerusalem / UK</div>
+            <h3 class="founder-name">Caroline Evers</h3>
+            <div class="founder-bio">
+              <p>Caroline Evers is a marketing and consultancy professional with experience spanning industry, entrepreneurship and academia. She is currently a Senior Lecturer at Manchester Metropolitan University where she works with all levels of business management students.</p>
+              <p>Caroline was born in Jerusalem into an Irish UN family, where she grew up and spent most of her young life. She still maintains strong ties with Palestine and is an active founding member of Mothers of Hind — utilising her business and education experience to develop an organisation committed to working with the people of Gaza, and communities shattered and devastated by conflict, as they rebuild vital pillars for a dignified future.</p>
+            </div>
+            <div class="founder-creds">
+              <span class="founder-cred">Senior Lecturer · MMU</span>
+              <span class="founder-cred">Marketing & Consultancy</span>
+              <span class="founder-cred">Education in solidarity</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Dr. Emilee Rauschenberger -->
+      <article class="founder-card reveal">
+        <div class="founder-grid">
+          <div class="founder-portrait">
+            <img src="https://mothersofhind.org/wp-content/uploads/2025/02/Dr.-Emilee-Rauschenberger-e1740091188775.webp" alt="Dr. Emilee Rauschenberger" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, var(--clr-amber), var(--clr-wine))'; this.parentElement.innerHTML='<div style=&quot;display:grid;place-items:center;height:100%;font-family:var(--font-display);font-size:5rem;font-style:italic;color:var(--clr-cream)&quot;>ER</div>';"/>
+          </div>
+          <div>
+            <div class="founder-role">Founding Trustee · Jordan</div>
+            <h3 class="founder-name">Dr. Emilee Rauschenberger</h3>
+            <div class="founder-bio">
+              <p>Emilee Rauschenberger is an education consultant with expertise in teacher education, policy development, networks and schooling in contexts affected by crisis. She currently works as a Research Fellow for the Queen Rania Foundation in Amman, Jordan, where she designs research projects in collaboration with fellow stakeholders and development partners to improve education policy and provision in Jordan.</p>
+              <p>She earned her PhD at the University of Edinburgh and completed her post‑doc at Manchester Metropolitan University. Originally from the United States and married to a Palestinian, she was living with her five children in Gaza when the destruction of the territory began in fall of 2023. After surviving a month displaced and under indiscriminate bombing in Gaza before escaping, she is passionate about standing in solidarity with those suffering in conflict‑affected areas.</p>
+            </div>
+            <div class="founder-creds">
+              <span class="founder-cred">PhD · University of Edinburgh</span>
+              <span class="founder-cred">Research Fellow · QRF</span>
+              <span class="founder-cred">Education in crisis</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Dr. Fella Lahmar -->
+      <article class="founder-card reveal">
+        <div class="founder-grid">
+          <div class="founder-portrait">
+            <img src="https://mothersofhind.org/wp-content/uploads/2025/01/1666899764020.jpg" alt="Dr. Fella Lahmar" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, var(--clr-wine-dark), var(--clr-olive-dark))'; this.parentElement.innerHTML='<div style=&quot;display:grid;place-items:center;height:100%;font-family:var(--font-display);font-size:5rem;font-style:italic;color:var(--clr-cream)&quot;>FL</div>';"/>
+          </div>
+          <div>
+            <div class="founder-role">Founding Trustee · Algeria / UK</div>
+            <h3 class="founder-name">Dr. Fella Lahmar</h3>
+            <div class="founder-bio">
+              <p>Dr. Fella Lahmar is a Senior Fellow of the Higher Education Academy (SFHEA) with over 20 years of experience in Islamic and comparative education, focusing on decolonisation, social justice, and the interplay between education, Islam and cultural heritage.</p>
+              <p>As a Research Fellow at the Open University, UK, she recently led the Algerian research project as part of the broader Decolonisation of Education for Peace in Africa (DEPA) multi‑country initiative, funded by the Arts and Humanities Research Council. Her publications include numerous journal articles and book chapters on decolonising education, Islamic educational theory and practice, and the role of indigenous arts in peacebuilding.</p>
+            </div>
+            <div class="founder-creds">
+              <span class="founder-cred">PhD · University of Nottingham</span>
+              <span class="founder-cred">SFHEA</span>
+              <span class="founder-cred">Research Fellow · Open University</span>
+              <span class="founder-cred">Decolonising education</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Dr. Hagir Mohamed -->
+      <article class="founder-card reveal">
+        <div class="founder-grid">
+          <div class="founder-portrait">
+            <img src="https://mothersofhind.org/wp-content/uploads/2025/02/Hagir.png" alt="Dr. Hagir Mohamed" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, var(--clr-olive-dark), var(--clr-wine-dark))'; this.parentElement.innerHTML='<div style=&quot;display:grid;place-items:center;height:100%;font-family:var(--font-display);font-size:5rem;font-style:italic;color:var(--clr-cream)&quot;>HM</div>';"/>
+          </div>
+          <div>
+            <div class="founder-role">Founding Trustee · Sudan / UK</div>
+            <h3 class="founder-name">Dr. Hagir Mohamed</h3>
+            <div class="founder-bio">
+              <p>Hagir Mohamed is a consultant obstetrician and gynaecologist with an interest in global health, education and women's health in low‑resource countries. As part of her role she has worked with the Royal College of Obstetricians and Gynaecologists in the Sudan Liaison Group, where she has been involved in fundraising for maternity hospitals, improving theatres, wards and medical care.</p>
+              <p>During the war she has used her experience to train and provide online teaching for trainees in obstetrics and gynaecology, as well as training to midwives and birth attendants in Sudan. She is committed to helping support, rebuild and improve healthcare access for women and children in conflict countries.</p>
+            </div>
+            <div class="founder-creds">
+              <span class="founder-cred">Consultant Obstetrician & Gynaecologist</span>
+              <span class="founder-cred">RCOG Sudan Liaison</span>
+              <span class="founder-cred">Women's health in conflict</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- EXECUTIVE TEAM -->
+<section class="section bg-alt">
+  <div class="container">
+    <div class="section-header reveal center">
+      <p class="eyebrow"><span class="rule"></span>On the ground · across continents</p>
+      <h2 class="display-l">Our <em class="italic-accent text-accent">executive team.</em></h2>
+      <p>Project coordinators, mental‑health practitioners and researchers making our work real — from Manchester to Gaza.</p>
+    </div>
+
+    <div class="team-grid">
+      <article class="team-card reveal">
+        <div class="team-img">
+          <img src="https://mothersofhind.org/wp-content/uploads/2025/02/Jabeen-Sultan.webp" alt="Jabeen Sultan" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, var(--clr-olive), var(--clr-amber))'; this.parentElement.innerHTML='<div style=&quot;display:grid;place-items:center;height:100%;font-family:var(--font-display);font-size:5rem;font-style:italic;color:var(--clr-cream)&quot;>JS</div>';"/>
+        </div>
+        <div class="team-role">Mental Health · UK</div>
+        <h3 class="team-name">Jabeen Sultan</h3>
+        <p class="team-bio">Trainee Mental Health Worker pursuing a PGDip in Mental Health Practice at Middlesex University. Also works as a Mental Health Mentor supporting university students with disabilities — driven by humanitarian causes.</p>
+      </article>
+
+      <article class="team-card reveal reveal-delay-1">
+        <div class="team-img">
+          <img src="https://mothersofhind.org/wp-content/uploads/2025/02/Roba-Al-Hoor-800x1200.webp" alt="Roba Al-Hoor" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, var(--clr-wine), var(--clr-amber))'; this.parentElement.innerHTML='<div style=&quot;display:grid;place-items:center;height:100%;font-family:var(--font-display);font-size:5rem;font-style:italic;color:var(--clr-cream)&quot;>RA</div>';"/>
+        </div>
+        <div class="team-role">Project Coordinator · Gaza</div>
+        <h3 class="team-name">Roba Al‑Hoor</h3>
+        <p class="team-bio">Palestinian software engineer, graduated from Al‑Azhar University during the war. Project coordinator for MoH in the Gaza Strip, with experience in coordinating projects and a deep love for Gaza — committed to restoring life to children and youth.</p>
+      </article>
+
+      <article class="team-card reveal reveal-delay-2">
+        <div class="team-img">
+          <img src="https://mothersofhind.org/wp-content/uploads/2025/02/Fatima-Mohamed.webp" alt="Fatma Mohamed" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, var(--clr-amber), var(--clr-olive-dark))'; this.parentElement.innerHTML='<div style=&quot;display:grid;place-items:center;height:100%;font-family:var(--font-display);font-size:5rem;font-style:italic;color:var(--clr-cream)&quot;>FM</div>';"/>
+        </div>
+        <div class="team-role">Biomedical Scientist</div>
+        <h3 class="team-name">Fatma Mohamed</h3>
+        <p class="team-bio">A Biomedical Scientist in Genomic Medicine with a strong background in Medical Microbiology and clinical research. Passionate about advancing healthcare through science and advocacy, and dedicated to social justice.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="cta-band-inner reveal">
+    <h2 class="display-l">Join the <em>circle of mothers</em> rebuilding futures.</h2>
+    <p>Partner with us, volunteer your expertise, or support our programmes directly. Every hand matters.</p>
+    <div class="hero-ctas" style="justify-content: center;">
+      <a href="donate.html" class="btn btn-primary btn-lg">Donate</a>
+      <a href="contact.html" class="btn btn-secondary btn-lg">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><span class="footer-brand-mark">h</span>Mothers of Hind</div>
+        <p class="footer-tagline">A non‑profit rebuilding education, care and dignity for children and families in communities devastated by war — in memory of Hind Rajab.</p>
+        <form class="newsletter-form" style="display: flex; gap: 8px; max-width: 360px;">
+          <input type="email" required placeholder="your@email.com" style="flex:1; padding: 0.8rem 1rem; border-radius: 999px; border: 1px solid rgba(250,246,240,0.2); background: rgba(250,246,240,0.06); color: var(--clr-cream);"/>
+          <button type="submit" class="btn btn-amber btn-sm">Subscribe</button>
+        </form>
+      </div>
+      <div class="footer-col"><h4>Explore</h4><ul>
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li>
+        <li><a href="projects.html">Our Projects</a></li><li><a href="heen.html">HIEN · هيّن</a></li>
+        <li><a href="shop.html">Shop</a></li></ul></div>
+      <div class="footer-col"><h4>Support</h4><ul>
+        <li><a href="donate.html">Donate</a></li><li><a href="donate.html#schools">Sponsor a Student</a></li>
+        <li><a href="donate.html#psychosocial">Psychosocial Care</a></li>
+        <li><a href="heen.html">Laptops for Students</a></li>
+        <li><a href="contact.html">Partner With Us</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4>
+        <ul style="color: rgba(250,246,240,0.7); font-size: 0.92rem; line-height: 1.7;">
+          <li>8 Southlands Avenue,<br/>Eccles, Manchester,<br/>England, M30 7GL</li>
+          <li style="margin-top: 12px;"><a href="mailto:admin@mothersofhind.org">admin@mothersofhind.org</a></li>
+          <li><a href="contact.html">Contact form →</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Mothers of Hind · All rights reserved</span>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/mothersofhind/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+        <a href="https://www.facebook.com/profile.php?id=61572306430591" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3a4 4 0 0 0-4 4v2H8v3h2v7h3v-7h2.5l.5-3H13v-2a1 1 0 0 1 1-1z"/></svg></a>
+        <a href="https://www.linkedin.com/company/mothers-of-hind/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zm-1.5-10.3a1.7 1.7 0 1 1 0-3.4 1.7 1.7 0 0 1 0 3.4zM19 19h-3v-4.7c0-1.1-.4-1.8-1.4-1.8a1.5 1.5 0 0 0-1.4 1 1.9 1.9 0 0 0-.1.7V19h-3v-9h3v1.3A3 3 0 0 1 15.7 10c2 0 3.3 1.3 3.3 4z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

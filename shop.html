@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Shop — Mothers of Hind</title>
+  <meta name="description" content="Ethical merchandise by Mothers of Hind — every purchase directly funds our schools, mental‑health programmes and the HIEN higher education network." />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%236B2737'/%3E%3Ctext x='50' y='68' font-family='serif' font-size='52' font-style='italic' fill='%23FAF6F0' text-anchor='middle'%3Eh%3C/text%3E%3C/svg%3E" />
+  <style>
+    /* Shop intro banner */
+    .shop-intro { background: var(--clr-cream-warm); padding: clamp(2.5rem, 5vw, 4rem) 0; border-bottom: 1px solid var(--clr-border); }
+    .shop-intro-grid { display: grid; grid-template-columns: 1fr auto; gap: var(--s-6); align-items: center; }
+    .shop-intro h2 { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 500; line-height: 1.25; margin-bottom: var(--s-2); }
+    .shop-intro h2 em { color: var(--accent); font-style: italic; }
+    .shop-intro p { color: var(--fg-muted); font-size: 1rem; line-height: 1.65; max-width: 40em; margin: 0; }
+    .shop-intro-stat { text-align: right; font-family: var(--font-display); }
+    .shop-intro-stat .big { font-size: 3.5rem; line-height: 1; color: var(--accent); font-style: italic; font-weight: 400; }
+    .shop-intro-stat .lbl { font-size: 0.8rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-muted); font-family: var(--font-body); font-weight: 600; margin-top: 8px; }
+
+    /* Filter bar */
+    .shop-filters { display: flex; align-items: center; gap: var(--s-3); margin-bottom: var(--s-7); flex-wrap: wrap; padding-bottom: var(--s-4); border-bottom: 1px solid var(--clr-border); }
+    .shop-filter-label { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: var(--fg-muted); margin-right: var(--s-2); }
+    .shop-filter { padding: 8px 18px; border: 1px solid var(--clr-border); background: var(--bg); border-radius: var(--r-full); font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: all var(--t-fast); color: var(--fg); font-family: var(--font-body); }
+    .shop-filter:hover { border-color: var(--accent); color: var(--accent); }
+    .shop-filter.active { background: var(--accent); color: var(--clr-cream); border-color: var(--accent); }
+    .shop-sort { margin-left: auto; font-size: 0.88rem; }
+    .shop-sort select { padding: 8px 14px; border: 1px solid var(--clr-border); background: var(--bg); border-radius: 4px; font-size: 0.88rem; color: var(--fg); font-family: var(--font-body); cursor: pointer; }
+
+    /* Product card tweaks */
+    .product-card { display: flex; flex-direction: column; }
+    .product-img { position: relative; }
+    .product-img-inner { width: 100%; height: 100%; display: grid; place-items: center; padding: 15%; color: var(--accent); transition: transform var(--t-slow); }
+    .product-card:hover .product-img-inner { transform: scale(1.04); }
+    .product-img-inner svg { width: 100%; height: 100%; }
+    .product-info { padding: 0; }
+    .product-info .category { font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 6px; }
+    .product-info h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 500; margin-bottom: var(--s-2); line-height: 1.25; }
+    .product-info .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: var(--s-3); }
+    .product-info .price { font-family: var(--font-display); font-size: 1.25rem; font-weight: 500; color: var(--fg); }
+    .product-info .price .old { color: var(--fg-muted); text-decoration: line-through; font-size: 0.85em; margin-right: 6px; font-weight: 400; }
+    .product-info .add-btn { padding: 6px 14px; border: 1px solid var(--clr-border); background: var(--bg); border-radius: var(--r-full); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all var(--t-fast); color: var(--fg); }
+    .product-info .add-btn:hover { background: var(--accent); color: var(--clr-cream); border-color: var(--accent); }
+
+    /* Variants for product image backgrounds (aesthetic, using SVG) */
+    .pi-wine { background: linear-gradient(135deg, var(--clr-wine), var(--clr-wine-dark)); color: var(--clr-cream); }
+    .pi-olive { background: linear-gradient(135deg, var(--clr-olive), var(--clr-olive-dark)); color: var(--clr-cream); }
+    .pi-amber { background: linear-gradient(135deg, var(--clr-amber), var(--clr-amber-dark, #A67A3A)); color: var(--clr-cream); }
+    .pi-cream { background: var(--clr-cream-warm); color: var(--accent); border: 1px solid var(--clr-border); }
+    .pi-ink { background: linear-gradient(135deg, var(--clr-ink), #4A3833); color: var(--clr-cream); }
+
+    .shop-empty-note { background: var(--clr-cream-warm); border: 1px dashed var(--clr-border); padding: var(--s-5); text-align: center; border-radius: 6px; margin-bottom: var(--s-6); font-size: 0.92rem; color: var(--fg-muted); }
+    .shop-empty-note strong { color: var(--fg); display: block; margin-bottom: 4px; font-family: var(--font-display); font-size: 1.05rem; font-weight: 500; }
+
+    /* Promise strip */
+    .promise-strip { background: var(--clr-ink); color: var(--clr-cream); padding: clamp(3rem, 6vw, 5rem) 0; }
+    .promise-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-6); }
+    .promise-item h4 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 500; margin-bottom: var(--s-2); color: var(--clr-amber); }
+    .promise-item p { color: rgba(250,246,240,0.75); line-height: 1.7; font-size: 0.95rem; }
+
+    /* Collection banner */
+    .collection-banner { margin: var(--s-7) 0; padding: clamp(2.5rem, 5vw, 4rem); background: linear-gradient(135deg, var(--clr-wine), var(--clr-wine-dark)); color: var(--clr-cream); border-radius: 8px; display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--s-6); align-items: center; position: relative; overflow: hidden; }
+    .collection-banner::before { content: ''; position: absolute; top: -50%; right: -20%; width: 60%; height: 200%; background: radial-gradient(circle, rgba(201,149,75,0.2), transparent 55%); pointer-events: none; }
+    .collection-banner > * { position: relative; z-index: 2; }
+    .collection-banner h3 { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 400; line-height: 1.15; margin-bottom: var(--s-4); color: var(--clr-cream); }
+    .collection-banner h3 em { color: var(--clr-amber); font-style: italic; }
+    .collection-banner p { color: rgba(250,246,240,0.85); line-height: 1.7; font-size: 1rem; margin-bottom: var(--s-5); }
+    .collection-art { aspect-ratio: 1; border-radius: 8px; background: rgba(250,246,240,0.06); display: grid; place-items: center; padding: 10%; }
+    .collection-art svg { width: 100%; height: 100%; color: var(--clr-amber); }
+
+    @media (max-width: 768px) {
+      .shop-intro-grid { grid-template-columns: 1fr; }
+      .shop-intro-stat { text-align: left; }
+      .shop-filters { gap: var(--s-2); }
+      .shop-sort { margin-left: 0; width: 100%; }
+      .promise-grid { grid-template-columns: 1fr; gap: var(--s-5); }
+      .collection-banner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">h</span>
+      <span class="brand-name">Mothers of Hind<small>Hope · Education · Care</small></span>
+    </a>
+    <nav class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="heen.html">HIEN · هيّن</a>
+      <a href="shop.html" class="active">Shop</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <a href="donate.html" class="btn btn-primary btn-sm">Donate</a>
+      <button class="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu">
+  <nav class="mobile-menu-list">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="projects.html">Our Projects</a>
+    <a href="heen.html">HIEN · هيّن</a>
+    <a href="shop.html">Shop</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="mobile-menu-cta">
+    <a href="donate.html" class="btn btn-primary btn-lg" style="width:100%;">Donate Now</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-inner reveal">
+      <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><span>Shop</span></div>
+      <p class="eyebrow"><span class="rule"></span>The MoH Shop</p>
+      <h1 class="display-xl">Wear the cause. <em class="italic-accent text-accent">Fund the work.</em></h1>
+      <p class="page-hero-desc">A small, thoughtful collection of ethical merchandise. Every item is produced under fair conditions, and every penny of profit funds our schools, mentorship and mental‑health programmes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP INTRO BANNER -->
+<div class="shop-intro reveal">
+  <div class="container">
+    <div class="shop-intro-grid">
+      <div>
+        <h2>100% of profits fund our <em>programmes.</em></h2>
+        <p>Not marketing. Not admin overheads. The margin on every shirt, print and pin goes directly into a meal, a therapy session, or a laptop for a student.</p>
+      </div>
+      <div class="shop-intro-stat">
+        <div class="big">100%</div>
+        <div class="lbl">Profit to programmes</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SHOP GRID -->
+<section class="section">
+  <div class="container">
+
+    <div class="shop-empty-note reveal">
+      <strong>A soft launch.</strong>
+      Our shop is growing. The collection below is a preview of what's coming — limited runs of ethically produced pieces. <a href="contact.html?subject=Shop%20Updates" style="color: var(--accent); font-weight: 600;">Tell us you'd like updates →</a>
+    </div>
+
+    <div class="shop-filters reveal">
+      <span class="shop-filter-label">Browse</span>
+      <button class="shop-filter active" data-filter="all">All</button>
+      <button class="shop-filter" data-filter="apparel">Apparel</button>
+      <button class="shop-filter" data-filter="print">Prints &amp; Posters</button>
+      <button class="shop-filter" data-filter="accessories">Accessories</button>
+      <button class="shop-filter" data-filter="gift">Gift a cause</button>
+      <div class="shop-sort">
+        <select aria-label="Sort products">
+          <option>Sort: Featured</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+          <option>Newest</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="shop-grid">
+
+      <!-- Product 1: Tote -->
+      <article class="product-card reveal" data-category="accessories">
+        <div class="product-img">
+          <span class="product-badge">New</span>
+          <div class="product-img-inner pi-cream">
+            <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 60 L50 170 Q50 180 60 180 L140 180 Q150 180 150 170 L150 60" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/>
+              <path d="M70 60 Q70 40 100 40 Q130 40 130 60" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <text x="100" y="130" font-family="Georgia, serif" font-style="italic" font-size="36" text-anchor="middle" fill="currentColor">h</text>
+            </svg>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Accessories</div>
+          <h3>Hope organic cotton tote</h3>
+          <p style="font-size: 0.85rem; color: var(--fg-muted); line-height: 1.55;">Heavyweight, unbleached organic cotton. Printed with a water‑based ink in the UK.</p>
+          <div class="price-row">
+            <div class="price">£18</div>
+            <button class="add-btn">Add to bag</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 2: Tee wine -->
+      <article class="product-card reveal reveal-delay-1" data-category="apparel">
+        <div class="product-img">
+          <div class="product-img-inner pi-wine">
+            <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 60 L70 45 L85 50 Q100 65 115 50 L130 45 L150 60 L145 80 L135 75 L135 165 Q135 170 130 170 L70 170 Q65 170 65 165 L65 75 L55 80 Z" stroke="currentColor" stroke-width="2" fill="rgba(250,246,240,0.06)"/>
+              <text x="100" y="125" font-family="Georgia, serif" font-style="italic" font-size="28" text-anchor="middle" fill="currentColor" opacity="0.9">hope</text>
+            </svg>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Apparel · Wine</div>
+          <h3>"Hope" tee — wine</h3>
+          <p style="font-size: 0.85rem; color: var(--fg-muted); line-height: 1.55;">Heavyweight tee in our signature wine. Fair‑trade, GOTS‑certified cotton. Unisex.</p>
+          <div class="price-row">
+            <div class="price">£28</div>
+            <button class="add-btn">Add to bag</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 3: HIEN hoodie -->
+      <article class="product-card reveal reveal-delay-2" data-category="apparel">
+        <div class="product-img">
+          <span class="product-badge">HIEN</span>
+          <div class="product-img-inner pi-olive">
+            <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M55 70 L75 50 L90 55 Q100 65 110 55 L125 50 L145 70 L150 100 L140 105 L140 170 Q140 175 135 175 L65 175 Q60 175 60 170 L60 105 L50 100 Z" stroke="currentColor" stroke-width="2" fill="rgba(250,246,240,0.06)"/>
+              <path d="M90 55 Q100 70 110 55 Q110 90 100 85 Q90 90 90 55" stroke="currentColor" stroke-width="2" fill="rgba(250,246,240,0.1)"/>
+              <text x="100" y="140" font-family="Amiri, serif" font-size="26" text-anchor="middle" fill="currentColor">هيّن</text>
+            </svg>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Apparel · Olive</div>
+          <h3>هيّن hoodie</h3>
+          <p style="font-size: 0.85rem; color: var(--fg-muted); line-height: 1.55;">Oversized hoodie with embroidered Arabic wordmark. Organic cotton fleece. Supports HIEN.</p>
+          <div class="price-row">
+            <div class="price">£48</div>
+            <button class="add-btn">Add to bag</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 4: Print -->
+      <article class="product-card reveal" data-category="print">
+        <div class="product-img">
+          <div class="product-img-inner pi-cream">
+            <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="35" y="25" width="130" height="150" stroke="currentColor" stroke-width="2" fill="none"/>
+              <text x="100" y="95" font-family="Georgia, serif" font-style="italic" font-size="28" text-anchor="middle" fill="currentColor">no child</text>
+              <text x="100" y="125" font-family="Georgia, serif" font-style="italic" font-size="28" text-anchor="middle" fill="currentColor">should</text>
+              <text x="100" y="155" font-family="Georgia, serif" font-style="italic" font-size="28" text-anchor="middle" fill="currentColor">wait alone.</text>
+              <line x1="50" y1="60" x2="75" y2="60" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+              <line x1="125" y1="60" x2="150" y2="60" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+            </svg>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Art Print · A3</div>
+          <h3>"No child should wait alone" print</h3>
+          <p style="font-size: 0.85rem; color: var(--fg-muted); line-height: 1.55;">Letterpress art print on 300gsm recycled cotton paper. Signed edition.</p>
+          <div class="price-row">
+            <div class="price">£22</div>
+            <button class="add-btn">Add to bag</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 5: Pin set -->
+      <article class="product-card reveal reveal-delay-1" data-category="accessories">
+        <div class="product-img">
+          <div class="product-img-inner pi-amber">
+            <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="70" cy="95" r="22" stroke="currentColor" stroke-width="2" fill="rgba(250,246,240,0.1)"/>
+              <text x="70" y="103" font-family="Georgia, serif" font-style="italic" font-size="22" text-anchor="middle" fill="currentColor">h</text>
+              <circle cx="130" cy="95" r="22" stroke="currentColor" stroke-width="2" fill="rgba(250,246,240,0.1)"/>
+              <path d="M120 90 L125 100 L140 85" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="100" cy="140" r="22" stroke="currentColor" stroke-width="2" fill="rgba(250,246,240,0.1)"/>
+              <text x="100" y="148" font-family="Amiri, serif" font-size="18" text-anchor="middle" fill="currentColor">هيّن</text>
+            </svg>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Accessories</div>
+          <h3>Enamel pin trio</h3>
+          <p style="font-size: 0.85rem; color: var(--fg-muted); line-height: 1.55;">Three enamel pins on a letterpress backing card. "h", a check‑mark and هيّن.</p>
+          <div class="price-row">
+            <div class="price"><span class="old">£18</span>£14</div>
+            <button class="add-btn">Add to bag</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 6: Notebook -->
+      <article class="product-card reveal reveal-delay-2" data-category="accessories">
+        <div class="product-img">
+          <div class="product-img-inner pi-ink">
+            <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="50" y="30" width="100" height="140" stroke="currentColor" stroke-width="2" fill="rgba(250,246,240,0.04)"/>
+              <line x1="65" y1="70" x2="135" y2="70" stroke="currentColor" stroke-width="1" opacity="0.6"/>
+              <line x1="65" y1="85" x2="135" y2="85" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+              <line x1="65" y1="100" x2="120" y2="100" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+              <line x1="65" y1="115" x2="135" y2="115" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+              <text x="100" y="55" font-family="Georgia, serif" font-style="italic" font-size="14" text-anchor="middle" fill="currentColor" opacity="0.9">notes on hope</text>
+              <rect x="145" y="50" width="6" height="100" fill="currentColor" opacity="0.4"/>
+            </svg>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Stationery</div>
+          <h3>Notes on hope — notebook</h3>
+          <p style="font-size: 0.85rem; color: var(--fg-muted); line-height: 1.55;">A5 linen‑bound notebook. 160 pages of acid‑free recycled paper. Bookmark included.</p>
+          <div class="price-row">
+            <div class="price">£16</div>
+            <button class="add-btn">Add to bag</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 7: Gift card -->
+      <article class="product-card reveal" data-category="gift">
+        <div class="product-img">
+          <span class="product-badge">Gift</span>
+          <div class="product-img-inner pi-wine">
+            <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="30" y="55" width="140" height="90" rx="6" stroke="currentColor" stroke-width="2" fill="rgba(250,246,240,0.05)"/>
+              <line x1="30" y1="80" x2="170" y2="80" stroke="currentColor" stroke-width="1"/>
+              <text x="100" y="115" font-family="Georgia, serif" font-style="italic" font-size="22" text-anchor="middle" fill="currentColor">a meal</text>
+              <text x="100" y="135" font-family="Arial, sans-serif" font-size="9" letter-spacing="2" text-anchor="middle" fill="currentColor" opacity="0.7">GIFT A CAUSE · £10</text>
+            </svg>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Gift a cause</div>
+          <h3>Gift a meal — £10 card</h3>
+          <p style="font-size: 0.85rem; color: var(--fg-muted); line-height: 1.55;">A printed card for the recipient — funds one hot meal at an MoH school in their name.</p>
+          <div class="price-row">
+            <div class="price">£10</div>
+            <button class="add-btn">Add to bag</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 8: Gift card laptop -->
+      <article class="product-card reveal reveal-delay-1" data-category="gift">
+        <div class="product-img">
+          <span class="product-badge">HIEN</span>
+          <div class="product-img-inner pi-olive">
+            <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="30" y="55" width="140" height="90" rx="6" stroke="currentColor" stroke-width="2" fill="rgba(250,246,240,0.05)"/>
+              <line x1="30" y1="80" x2="170" y2="80" stroke="currentColor" stroke-width="1"/>
+              <text x="100" y="115" font-family="Georgia, serif" font-style="italic" font-size="20" text-anchor="middle" fill="currentColor">a laptop</text>
+              <text x="100" y="135" font-family="Arial, sans-serif" font-size="9" letter-spacing="2" text-anchor="middle" fill="currentColor" opacity="0.7">GIFT A CAUSE · £300</text>
+            </svg>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Gift a cause</div>
+          <h3>Gift a laptop — £300 card</h3>
+          <p style="font-size: 0.85rem; color: var(--fg-muted); line-height: 1.55;">Sponsor a HIEN laptop in a loved one's name. Printed card, personal message option.</p>
+          <div class="price-row">
+            <div class="price">£300</div>
+            <button class="add-btn">Add to bag</button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Collection banner -->
+    <div class="collection-banner reveal">
+      <div>
+        <p class="eyebrow" style="color: var(--clr-amber); margin-bottom: var(--s-4);"><span class="rule" style="background: var(--clr-amber);"></span>Coming soon</p>
+        <h3>The <em>Olive Grove</em> collection.</h3>
+        <p>A limited edition series launching in partnership with Palestinian artists and diaspora designers. Prints, embroidery and apparel honouring land, memory and return. Sign up below and we'll tell you the moment it drops.</p>
+        <form class="newsletter-form" style="display: flex; gap: 8px; max-width: 400px;">
+          <input type="email" required placeholder="your@email.com" style="flex:1; padding: 0.8rem 1rem; border-radius: 999px; border: 1px solid rgba(250,246,240,0.25); background: rgba(250,246,240,0.08); color: var(--clr-cream);"/>
+          <button type="submit" class="btn btn-amber btn-sm">Notify me</button>
+        </form>
+      </div>
+      <div class="collection-art">
+        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Olive branch -->
+          <path d="M40 160 Q80 120 120 90 Q150 70 170 40" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="70" cy="130" rx="6" ry="12" fill="currentColor" opacity="0.7" transform="rotate(-30 70 130)"/>
+          <ellipse cx="60" cy="125" rx="6" ry="12" fill="currentColor" opacity="0.5" transform="rotate(30 60 125)"/>
+          <ellipse cx="95" cy="110" rx="6" ry="12" fill="currentColor" opacity="0.7" transform="rotate(-20 95 110)"/>
+          <ellipse cx="85" cy="105" rx="6" ry="12" fill="currentColor" opacity="0.5" transform="rotate(40 85 105)"/>
+          <ellipse cx="125" cy="85" rx="6" ry="12" fill="currentColor" opacity="0.7" transform="rotate(-10 125 85)"/>
+          <ellipse cx="115" cy="80" rx="6" ry="12" fill="currentColor" opacity="0.5" transform="rotate(50 115 80)"/>
+          <ellipse cx="150" cy="60" rx="6" ry="12" fill="currentColor" opacity="0.7" transform="rotate(0 150 60)"/>
+          <ellipse cx="140" cy="55" rx="6" ry="12" fill="currentColor" opacity="0.5" transform="rotate(60 140 55)"/>
+          <!-- Small olives -->
+          <circle cx="85" cy="125" r="3" fill="currentColor"/>
+          <circle cx="105" cy="100" r="3" fill="currentColor"/>
+          <circle cx="135" cy="78" r="3" fill="currentColor"/>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROMISE STRIP -->
+<section class="promise-strip reveal">
+  <div class="container">
+    <div style="max-width: 40em; margin-bottom: var(--s-6);">
+      <p class="eyebrow" style="color: var(--clr-amber);"><span class="rule" style="background: var(--clr-amber);"></span>Our promise</p>
+      <h2 class="display-l" style="color: var(--clr-cream);">Ethical at <em class="italic-accent" style="color: var(--clr-amber);">every stage.</em></h2>
+    </div>
+    <div class="promise-grid">
+      <div class="promise-item">
+        <h4>Fair production</h4>
+        <p>Our garments use GOTS‑certified organic cotton and are produced by suppliers with fair‑trade accreditation. No sweatshops. Ever.</p>
+      </div>
+      <div class="promise-item">
+        <h4>Considered packaging</h4>
+        <p>Plastic‑free: recyclable kraft mailers, paper tape, compostable stickers. We believe small choices add up — and we will keep improving.</p>
+      </div>
+      <div class="promise-item">
+        <h4>100% profit to mission</h4>
+        <p>Every item's profit — after production, shipping and the tax we owe — is ring‑fenced for the MoH Schools, HIEN, and our mental‑health programmes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="cta-band-inner reveal">
+    <h2 class="display-l">Prefer to <em>donate directly?</em></h2>
+    <p>Not into merch? No problem. Every pound given directly through our donation page reaches our programmes the same way — no shipping required.</p>
+    <div class="hero-ctas" style="justify-content: center;">
+      <a href="donate.html" class="btn btn-primary btn-lg">Donate instead</a>
+      <a href="projects.html" class="btn btn-secondary btn-lg">See the work</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><span class="footer-brand-mark">h</span>Mothers of Hind</div>
+        <p class="footer-tagline">A non‑profit rebuilding education, care and dignity for children and families in communities devastated by war — in memory of Hind Rajab.</p>
+        <form class="newsletter-form" style="display: flex; gap: 8px; max-width: 360px;">
+          <input type="email" required placeholder="your@email.com" style="flex:1; padding: 0.8rem 1rem; border-radius: 999px; border: 1px solid rgba(250,246,240,0.2); background: rgba(250,246,240,0.06); color: var(--clr-cream);"/>
+          <button type="submit" class="btn btn-amber btn-sm">Subscribe</button>
+        </form>
+      </div>
+      <div class="footer-col"><h4>Explore</h4><ul>
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li>
+        <li><a href="projects.html">Our Projects</a></li><li><a href="heen.html">HIEN · هيّن</a></li>
+        <li><a href="shop.html">Shop</a></li></ul></div>
+      <div class="footer-col"><h4>Support</h4><ul>
+        <li><a href="donate.html">Donate</a></li><li><a href="donate.html#schools">Sponsor a Student</a></li>
+        <li><a href="donate.html#psychosocial">Psychosocial Care</a></li>
+        <li><a href="heen.html">Laptops for Students</a></li>
+        <li><a href="contact.html">Partner With Us</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4>
+        <ul style="color: rgba(250,246,240,0.7); font-size: 0.92rem; line-height: 1.7;">
+          <li>8 Southlands Avenue,<br/>Eccles, Manchester,<br/>England, M30 7GL</li>
+          <li style="margin-top: 12px;"><a href="mailto:admin@mothersofhind.org">admin@mothersofhind.org</a></li>
+          <li><a href="contact.html">Contact form →</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Mothers of Hind · All rights reserved</span>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/mothersofhind/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+        <a href="https://www.facebook.com/profile.php?id=61572306430591" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3a4 4 0 0 0-4 4v2H8v3h2v7h3v-7h2.5l.5-3H13v-2a1 1 0 0 1 1-1z"/></svg></a>
+        <a href="https://www.linkedin.com/company/mothers-of-hind/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zm-1.5-10.3a1.7 1.7 0 1 1 0-3.4 1.7 1.7 0 0 1 0 3.4zM19 19h-3v-4.7c0-1.1-.4-1.8-1.4-1.8a1.5 1.5 0 0 0-1.4 1 1.9 1.9 0 0 0-.1.7V19h-3v-9h3v1.3A3 3 0 0 1 15.7 10c2 0 3.3 1.3 3.3 4z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+  // Shop filter functionality
+  (function(){
+    const filters = document.querySelectorAll('.shop-filter');
+    const cards = document.querySelectorAll('.product-card');
+
+    filters.forEach(f => {
+      f.addEventListener('click', () => {
+        filters.forEach(x => x.classList.remove('active'));
+        f.classList.add('active');
+        const cat = f.dataset.filter;
+        cards.forEach(c => {
+          if (cat === 'all' || c.dataset.category === cat) {
+            c.style.display = '';
+            setTimeout(() => c.style.opacity = '1', 10);
+          } else {
+            c.style.opacity = '0';
+            setTimeout(() => c.style.display = 'none', 200);
+          }
+        });
+      });
+    });
+
+    document.querySelectorAll('.add-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const original = btn.textContent;
+        btn.textContent = '✓ Added';
+        btn.style.background = 'var(--clr-olive)';
+        btn.style.color = 'var(--clr-cream)';
+        btn.style.borderColor = 'var(--clr-olive)';
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.style.background = '';
+          btn.style.color = '';
+          btn.style.borderColor = '';
+        }, 1400);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

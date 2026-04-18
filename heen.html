@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>HIEN · هيّن — Hind's Higher Education Network | Mothers of Hind</title>
+  <meta name="description" content="HIEN (Hind's Higher Education Network · هيّن) — a global academic network providing open-access education, laptops and mentorship to Gaza university students whose studies have been interrupted by war." />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%236B2737'/%3E%3Ctext x='50' y='68' font-family='serif' font-size='52' font-style='italic' fill='%23FAF6F0' text-anchor='middle'%3Eh%3C/text%3E%3C/svg%3E" />
+  <style>
+    /* ——— HIEN hero ——— */
+    .heen-hero { background: linear-gradient(180deg, var(--clr-cream-warm) 0%, var(--clr-cream) 100%); padding: 9rem 0 5rem; position: relative; overflow: hidden; }
+    .heen-hero::before { content: ''; position: absolute; top: -40%; left: -10%; width: 60%; height: 120%; background: radial-gradient(circle, rgba(107, 127, 92, 0.15), transparent 65%); pointer-events: none; }
+    .heen-hero::after { content: ''; position: absolute; bottom: -30%; right: -20%; width: 60%; height: 120%; background: radial-gradient(circle, rgba(201, 149, 75, 0.12), transparent 65%); pointer-events: none; }
+    .heen-hero-inner { position: relative; z-index: 2; max-width: 62rem; }
+    .heen-wordmark { font-family: var(--font-arabic); font-weight: 400; font-size: clamp(5rem, 15vw, 11rem); line-height: 0.9; color: var(--clr-wine); margin-bottom: var(--s-4); letter-spacing: 0; direction: rtl; }
+    .heen-wordmark-small { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-style: italic; font-weight: 400; color: var(--accent); display: inline-block; margin-left: 8px; vertical-align: middle; }
+    .heen-subtitle { font-family: var(--font-display); font-size: clamp(1.8rem, 4.5vw, 3.4rem); line-height: 1.1; font-weight: 400; margin-bottom: var(--s-5); max-width: 18em; }
+    .heen-subtitle em { font-style: italic; color: var(--accent); }
+    .heen-tagline { color: var(--fg-muted); font-size: 1.1rem; line-height: 1.75; max-width: 40em; margin-bottom: var(--s-6); }
+    .heen-meaning { display: inline-flex; align-items: center; gap: var(--s-3); padding: var(--s-3) var(--s-4); background: rgba(107, 127, 92, 0.08); border: 1px solid rgba(107, 127, 92, 0.2); border-radius: var(--r-full); font-size: 0.9rem; color: var(--fg); margin-bottom: var(--s-5); }
+    .heen-meaning .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--clr-olive); }
+    .heen-meaning b { font-weight: 600; color: var(--clr-olive-dark); }
+
+    /* ——— The why ——— */
+    .why-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+    .why-visual { aspect-ratio: 4/5; border-radius: 4px; background: linear-gradient(135deg, var(--clr-wine), var(--clr-wine-dark)); position: relative; overflow: hidden; }
+    .why-visual img { width: 100%; height: 100%; object-fit: cover; opacity: 0.72; }
+    .why-visual-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(43,31,28,0.85)); padding: var(--s-5); display: flex; flex-direction: column; justify-content: flex-end; color: var(--clr-cream); }
+    .why-visual-overlay .big { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem); font-style: italic; line-height: 1; margin-bottom: var(--s-2); color: var(--clr-amber); }
+    .why-visual-overlay .label { font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(250,246,240,0.75); }
+
+    /* ——— How it works ——— */
+    .how-section { background: var(--clr-ink); color: var(--clr-cream); padding: clamp(4rem, 8vw, 7rem) 0; }
+    .how-section h2 { color: var(--clr-cream); }
+    .how-section .eyebrow { color: var(--clr-amber); }
+    .how-section .eyebrow .rule { background: var(--clr-amber); }
+    .how-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-5); margin-top: var(--s-7); position: relative; }
+    .how-steps::before { content: ''; position: absolute; top: 28px; left: 5%; right: 5%; height: 1px; background: linear-gradient(90deg, transparent, rgba(250,246,240,0.2), transparent); z-index: 0; }
+    .how-step { position: relative; z-index: 1; }
+    .how-step-num { width: 56px; height: 56px; border-radius: 50%; background: var(--clr-ink); border: 1.5px solid var(--clr-amber); display: grid; place-items: center; font-family: var(--font-display); font-style: italic; font-size: 1.5rem; color: var(--clr-amber); margin-bottom: var(--s-4); }
+    .how-step h4 { font-family: var(--font-display); font-size: 1.25rem; margin-bottom: var(--s-3); font-weight: 500; color: var(--clr-cream); }
+    .how-step p { color: rgba(250,246,240,0.7); font-size: 0.95rem; line-height: 1.7; }
+
+    /* ——— Offer pillars ——— */
+    .offer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); margin-top: var(--s-7); }
+    .offer-card { padding: var(--s-6); background: var(--bg); border: 1px solid var(--clr-border); border-radius: 6px; transition: all var(--t-med); position: relative; overflow: hidden; }
+    .offer-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform var(--t-med); }
+    .offer-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .offer-card:hover::before { transform: scaleX(1); }
+    .offer-icon { width: 52px; height: 52px; border-radius: 12px; background: var(--clr-cream-warm); display: grid; place-items: center; margin-bottom: var(--s-4); color: var(--accent); }
+    .offer-card h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 500; margin-bottom: var(--s-3); line-height: 1.25; }
+    .offer-card p { color: var(--fg-muted); line-height: 1.7; font-size: 0.98rem; margin-bottom: var(--s-4); }
+    .offer-list { list-style: none; padding: 0; margin: 0; }
+    .offer-list li { padding: var(--s-2) 0; border-top: 1px dashed var(--clr-border); font-size: 0.92rem; color: var(--fg); position: relative; padding-left: 22px; }
+    .offer-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 600; }
+
+    /* ——— Laptop sponsor callout ——— */
+    .laptop-callout { background: var(--clr-wine); color: var(--clr-cream); padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem); border-radius: 8px; margin-top: var(--s-6); position: relative; overflow: hidden; }
+    .laptop-callout::before { content: ''; position: absolute; top: -50%; right: -10%; width: 50%; height: 200%; background: radial-gradient(circle, rgba(201,149,75,0.18), transparent 60%); pointer-events: none; }
+    .laptop-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--s-7); align-items: center; position: relative; z-index: 2; }
+    .laptop-callout h2 { color: var(--clr-cream); font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); line-height: 1.15; margin-bottom: var(--s-4); font-weight: 400; }
+    .laptop-callout h2 em { color: var(--clr-amber); font-style: italic; }
+    .laptop-callout p { color: rgba(250,246,240,0.85); line-height: 1.75; font-size: 1.05rem; margin-bottom: var(--s-5); }
+    .laptop-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s-4); margin-bottom: var(--s-5); }
+    .laptop-stat { border-top: 1px solid rgba(250,246,240,0.2); padding-top: var(--s-3); }
+    .laptop-stat .num { font-family: var(--font-display); font-style: italic; font-size: 2rem; color: var(--clr-amber); line-height: 1; display: block; margin-bottom: 4px; }
+    .laptop-stat .lbl { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(250,246,240,0.65); }
+    .laptop-visual { aspect-ratio: 1; background: linear-gradient(135deg, rgba(201,149,75,0.15), rgba(201,149,75,0.05)); border-radius: 8px; position: relative; display: grid; place-items: center; }
+    .laptop-visual svg { width: 70%; max-width: 240px; color: var(--clr-amber); }
+
+    /* ——— Involvement cards ——— */
+    .involve-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); margin-top: var(--s-7); }
+    .involve-card { padding: var(--s-6); background: var(--bg); border-radius: 6px; border-left: 2px solid var(--accent); transition: all var(--t-med); display: flex; flex-direction: column; }
+    .involve-card:hover { background: var(--clr-cream-warm); }
+    .involve-card .role-tag { font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: var(--s-2); }
+    .involve-card h3 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 500; margin-bottom: var(--s-3); }
+    .involve-card p { color: var(--fg-muted); line-height: 1.7; flex: 1; margin-bottom: var(--s-4); }
+    .involve-card a { font-weight: 600; color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: gap var(--t-fast); font-size: 0.92rem; }
+    .involve-card a:hover { gap: 14px; }
+
+    /* ——— Voices / testimonial ——— */
+    .voices-section { background: var(--clr-cream-warm); }
+    .voice-card { background: var(--bg); padding: clamp(2rem, 5vw, 3.5rem); border-radius: 6px; position: relative; max-width: 44em; margin: 0 auto; box-shadow: var(--shadow-md); }
+    .voice-quote-mark { position: absolute; top: -24px; left: var(--s-5); font-family: var(--font-display); font-style: italic; font-size: 6rem; line-height: 1; color: var(--accent); opacity: 0.4; }
+    .voice-quote { font-family: var(--font-display); font-style: italic; font-size: clamp(1.25rem, 2.5vw, 1.65rem); line-height: 1.5; margin-bottom: var(--s-5); color: var(--fg); position: relative; z-index: 2; }
+    .voice-author { display: flex; align-items: center; gap: var(--s-3); border-top: 1px solid var(--clr-border); padding-top: var(--s-4); }
+    .voice-avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--clr-amber), var(--clr-olive)); display: grid; place-items: center; color: var(--clr-cream); font-family: var(--font-display); font-style: italic; font-weight: 500; flex-shrink: 0; }
+    .voice-author-info .n { font-family: var(--font-display); font-weight: 500; font-size: 1.05rem; }
+    .voice-author-info .r { font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ——— FAQ ——— */
+    .faq-grid { max-width: 52em; margin: var(--s-7) auto 0; }
+    .faq-item { border-bottom: 1px solid var(--clr-border); padding: var(--s-4) 0; }
+    .faq-item summary { font-family: var(--font-display); font-size: 1.2rem; font-weight: 500; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--s-4); transition: color var(--t-fast); }
+    .faq-item summary:hover { color: var(--accent); }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after { content: '+'; font-family: var(--font-display); font-size: 1.6rem; color: var(--accent); font-weight: 300; transition: transform var(--t-fast); flex-shrink: 0; }
+    .faq-item[open] summary::after { transform: rotate(45deg); }
+    .faq-item[open] summary { color: var(--accent); }
+    .faq-body { padding-top: var(--s-3); color: var(--fg-muted); line-height: 1.75; font-size: 0.98rem; }
+
+    @media (max-width: 1024px) {
+      .how-steps { grid-template-columns: 1fr 1fr; gap: var(--s-6); }
+      .how-steps::before { display: none; }
+      .offer-grid, .involve-grid { grid-template-columns: 1fr; }
+      .laptop-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; gap: var(--s-6); }
+      .why-visual { max-width: 420px; }
+    }
+    @media (max-width: 600px) {
+      .how-steps { grid-template-columns: 1fr; }
+      .laptop-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">h</span>
+      <span class="brand-name">Mothers of Hind<small>Hope · Education · Care</small></span>
+    </a>
+    <nav class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="heen.html" class="active">HIEN · هيّن</a>
+      <a href="shop.html">Shop</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <a href="donate.html" class="btn btn-primary btn-sm">Donate</a>
+      <button class="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu">
+  <nav class="mobile-menu-list">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="projects.html">Our Projects</a>
+    <a href="heen.html">HIEN · هيّن</a>
+    <a href="shop.html">Shop</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="mobile-menu-cta">
+    <a href="donate.html" class="btn btn-primary btn-lg" style="width:100%;">Donate Now</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="heen-hero">
+  <div class="container">
+    <div class="heen-hero-inner reveal">
+      <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><a href="projects.html">Projects</a><span class="sep">/</span><span>HIEN · هيّن</span></div>
+      <p class="eyebrow" style="margin-bottom: var(--s-5);"><span class="rule"></span>Hind's Higher Education Network</p>
+
+      <h1 class="heen-wordmark">هيّن<span class="heen-wordmark-small">· HIEN</span></h1>
+
+      <div class="heen-meaning">
+        <span class="dot"></span>
+        <span>From the Arabic <b>هيّن</b> — <em>gentle, attainable, within reach</em> — and honouring <b>Hind</b>.</span>
+      </div>
+
+      <h2 class="heen-subtitle">Higher education, <em>back within reach</em> — for every displaced student.</h2>
+      <p class="heen-tagline">
+        HIEN is a global network of academics, universities and volunteers working together to restore access to higher education for students in Gaza whose studies have been interrupted by war. Open‑access courses, devices, mentorship, and a community that refuses to let their futures be erased.
+      </p>
+      <div class="hero-ctas">
+        <a href="donate.html#heen" class="btn btn-primary btn-lg">Sponsor a laptop · £300</a>
+        <a href="#how" class="btn btn-secondary btn-lg">How it works</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="section" id="why">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-visual reveal">
+        <img src="https://images.unsplash.com/photo-1522881193457-37ae97c905bf?w=800&q=80&auto=format&fit=crop" alt="Student studying" onerror="this.style.display='none'"/>
+        <div class="why-visual-overlay">
+          <div class="big">88,000+</div>
+          <div class="label">University students in Gaza with studies interrupted</div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <p class="eyebrow"><span class="rule"></span>The gap we are closing</p>
+        <h2 class="display-l" style="margin-bottom: var(--s-5);">Every university in Gaza has been <em class="italic-accent text-accent">destroyed or severely damaged.</em></h2>
+        <p style="color: var(--fg-muted); line-height: 1.8; font-size: 1.05rem; margin-bottom: var(--s-5);">
+          A generation of young scholars — medical students, engineers, teachers, researchers — have had their lecture halls turned to rubble, their libraries burned, their laptops lost. Many continue to study in tents, sharing a single phone between classmates, writing exam answers under bombardment.
+        </p>
+        <p style="color: var(--fg-muted); line-height: 1.8; font-size: 1.05rem; margin-bottom: var(--s-5);">
+          HIEN was built for them. Not as charity, but as solidarity — a bridge between the world's universities and the students who refuse to give up. We provide devices, curated open‑access courses, one‑to‑one academic mentorship, and recognised pathways that keep their degrees moving forward.
+        </p>
+        <blockquote style="font-family: var(--font-display); font-style: italic; font-size: 1.4rem; line-height: 1.45; color: var(--fg); padding: var(--s-4) var(--s-5); border-left: 2px solid var(--accent); background: var(--clr-cream-warm); margin: 0;">
+          "Education is the one thing they cannot take — if we keep it alive."
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="container">
+    <div class="reveal" style="max-width: 42em;">
+      <p class="eyebrow"><span class="rule"></span>How HIEN works</p>
+      <h2 class="display-l" style="color: var(--clr-cream); margin-bottom: var(--s-4);">Four steps. <em class="italic-accent" style="color: var(--clr-amber);">One bridge.</em></h2>
+      <p style="color: rgba(250,246,240,0.7); font-size: 1.05rem; line-height: 1.7; max-width: 36em;">A simple, dignified model connecting academics and students — across borders, across disciplines, across the rubble.</p>
+    </div>
+
+    <div class="how-steps">
+      <div class="how-step reveal">
+        <div class="how-step-num">01</div>
+        <h4>We register students</h4>
+        <p>Students in Gaza apply through our local coordinators. We verify their enrolment status and academic goals, then match them to the right programme track.</p>
+      </div>
+      <div class="how-step reveal reveal-delay-1">
+        <div class="how-step-num">02</div>
+        <h4>We equip them</h4>
+        <p>Every matched student receives a laptop, study stipend and connectivity support — the baseline tools needed to re‑enter academic life from a tent or temporary shelter.</p>
+      </div>
+      <div class="how-step reveal reveal-delay-2">
+        <div class="how-step-num">03</div>
+        <h4>Academics step in</h4>
+        <p>Volunteer professors and postgraduates deliver open‑access lectures, one‑to‑one mentorship, and asynchronous seminars in medicine, engineering, humanities and law.</p>
+      </div>
+      <div class="how-step reveal reveal-delay-3">
+        <div class="how-step-num">04</div>
+        <h4>Degrees keep moving</h4>
+        <p>We partner with universities to accredit coursework, supervise theses, and create pathways so students do not lose years — or their place in the world of scholarship.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE OFFER -->
+<section class="section" id="offer">
+  <div class="container">
+    <div class="reveal" style="max-width: 40em;">
+      <p class="eyebrow"><span class="rule"></span>What we offer</p>
+      <h2 class="display-l" style="margin-bottom: var(--s-4);">A full <em class="italic-accent text-accent">learning lifeline.</em></h2>
+      <p style="color: var(--fg-muted); font-size: 1.05rem; line-height: 1.7;">Education is more than access to lectures. HIEN wraps around the student — hardware, human, academic.</p>
+    </div>
+
+    <div class="offer-grid">
+      <div class="offer-card reveal">
+        <div class="offer-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M1 20h22"/><path d="M8 17l-2 3"/><path d="M16 17l2 3"/></svg>
+        </div>
+        <h3>Devices &amp; connectivity</h3>
+        <p>Every student gets the baseline tools to study — no matter how many times they have been displaced.</p>
+        <ul class="offer-list">
+          <li>Laptop with preloaded resources</li>
+          <li>Internet data bundle</li>
+          <li>Solar charging where possible</li>
+          <li>Technical support line</li>
+        </ul>
+      </div>
+      <div class="offer-card reveal reveal-delay-1">
+        <div class="offer-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6"/><path d="M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <h3>Academic mentorship</h3>
+        <p>One‑to‑one pairing with faculty and postgraduate scholars in the student's discipline — medicine, engineering, law, humanities.</p>
+        <ul class="offer-list">
+          <li>Weekly 1:1 sessions</li>
+          <li>Thesis &amp; research supervision</li>
+          <li>Peer study circles</li>
+          <li>Career &amp; scholarship guidance</li>
+        </ul>
+      </div>
+      <div class="offer-card reveal reveal-delay-2">
+        <div class="offer-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg>
+        </div>
+        <h3>Open‑access curriculum</h3>
+        <p>A curated, discipline‑specific library of courses, textbooks and recorded lectures — working offline when needed.</p>
+        <ul class="offer-list">
+          <li>Curated open courseware</li>
+          <li>Recorded seminars</li>
+          <li>Offline‑first materials</li>
+          <li>Arabic &amp; English tracks</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LAPTOP CALLOUT -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="laptop-callout reveal">
+      <div class="laptop-grid">
+        <div>
+          <p class="eyebrow" style="color: var(--clr-amber); margin-bottom: var(--s-4);"><span class="rule" style="background: var(--clr-amber);"></span>Sponsor a laptop</p>
+          <h2>£300 puts a student <em>back at their desk.</em></h2>
+          <p>A single laptop is often the difference between a paused life and a continued education. Your sponsorship covers the device, connectivity for the term, and links a student to an academic mentor through HIEN.</p>
+          <div class="laptop-stats">
+            <div class="laptop-stat"><span class="num">£300</span><span class="lbl">One laptop sponsorship</span></div>
+            <div class="laptop-stat"><span class="num">1:1</span><span class="lbl">Academic mentor pairing</span></div>
+            <div class="laptop-stat"><span class="num">12 mo</span><span class="lbl">Connectivity covered</span></div>
+            <div class="laptop-stat"><span class="num">∞</span><span class="lbl">Years of impact</span></div>
+          </div>
+          <div class="hero-ctas">
+            <a href="donate.html#heen" class="btn btn-amber btn-lg">Sponsor now</a>
+            <a href="contact.html" class="btn btn-ghost btn-lg" style="color: var(--clr-cream); border-color: rgba(250,246,240,0.25);">Sponsor in bulk</a>
+          </div>
+        </div>
+        <div class="laptop-visual">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="30" y="50" width="140" height="90" rx="6" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <rect x="40" y="60" width="120" height="70" rx="2" stroke="currentColor" stroke-width="1" fill="rgba(201,149,75,0.08)"/>
+            <path d="M20 140 L180 140 L175 155 L25 155 Z" stroke="currentColor" stroke-width="2.5" fill="rgba(201,149,75,0.05)"/>
+            <line x1="80" y1="148" x2="120" y2="148" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <g opacity="0.7">
+              <circle cx="100" cy="85" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              <path d="M85 105 L115 105" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M75 115 L125 115" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </g>
+            <g opacity="0.5">
+              <circle cx="55" cy="40" r="3" fill="currentColor"/>
+              <circle cx="145" cy="35" r="2" fill="currentColor"/>
+              <circle cx="170" cy="85" r="2.5" fill="currentColor"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GET INVOLVED -->
+<section class="section" style="background: var(--bg-alt);" id="involve">
+  <div class="container">
+    <div class="reveal" style="max-width: 40em;">
+      <p class="eyebrow"><span class="rule"></span>Ways to get involved</p>
+      <h2 class="display-l" style="margin-bottom: var(--s-4);">Every discipline. <em class="italic-accent text-accent">Every hour counts.</em></h2>
+      <p style="color: var(--fg-muted); font-size: 1.05rem; line-height: 1.7;">HIEN runs on the generosity of academics, institutions and supporters. Here is where you fit in.</p>
+    </div>
+
+    <div class="involve-grid">
+      <article class="involve-card reveal">
+        <span class="role-tag">For academics</span>
+        <h3>Become a mentor</h3>
+        <p>Offer a few hours a month to supervise, teach or mentor a student in your discipline. We match you with students whose needs fit your expertise — across medicine, engineering, humanities, social sciences and more.</p>
+        <a href="contact.html?subject=HIEN%20Mentor">Volunteer as a mentor <span>→</span></a>
+      </article>
+      <article class="involve-card reveal reveal-delay-1">
+        <span class="role-tag">For universities</span>
+        <h3>Partner institutionally</h3>
+        <p>Open your courses, certify coursework, offer scholarships, or host visiting HIEN fellows. We work with partner universities to create formal academic pathways that keep students' degrees moving forward.</p>
+        <a href="contact.html?subject=HIEN%20Partnership">Start a conversation <span>→</span></a>
+      </article>
+      <article class="involve-card reveal reveal-delay-2">
+        <span class="role-tag">For supporters</span>
+        <h3>Fund a student's year</h3>
+        <p>Sponsor a laptop at £300, or cover a full year of study at £1,200 — device, connectivity and mentorship included. Every contribution is ring‑fenced and matched directly to a named student.</p>
+        <a href="donate.html#heen">Sponsor a student <span>→</span></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- VOICES -->
+<section class="section voices-section">
+  <div class="container">
+    <div class="voice-card reveal">
+      <div class="voice-quote-mark">"</div>
+      <blockquote class="voice-quote">
+        We studied medicine for six years. The building is gone, the textbooks are ash, my classmates are scattered between tents and borders — but the degree, the vocation, the reason we started this, none of that is gone. HIEN is the thread we are holding on to.
+      </blockquote>
+      <div class="voice-author">
+        <div class="voice-avatar">M.</div>
+        <div class="voice-author-info">
+          <div class="n">A medical student, Gaza</div>
+          <div class="r">Name withheld · composite reflection from HIEN participants</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <div class="reveal" style="text-align: center; max-width: 36em; margin: 0 auto;">
+      <p class="eyebrow" style="justify-content: center;"><span class="rule"></span>Good questions</p>
+      <h2 class="display-l" style="margin-bottom: var(--s-4);">Things people ask about <em class="italic-accent text-accent">HIEN.</em></h2>
+    </div>
+
+    <div class="faq-grid reveal">
+      <details class="faq-item">
+        <summary>Who is eligible to receive support through HIEN?</summary>
+        <div class="faq-body">HIEN supports university students in Gaza whose higher education has been interrupted by the ongoing war. Priority is given to students in the final years of their degree, students in medicine and the health sciences, and students without access to any device. All applicants are verified through local coordinators working on the ground.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What does the £300 laptop sponsorship cover exactly?</summary>
+        <div class="faq-body">It covers a refurbished laptop preloaded with offline study materials, a 12‑month data/connectivity bundle, basic technical support, and placement into HIEN's mentorship pairing — meaning your sponsorship does not end at the device. 100% of the sponsorship is ring‑fenced for this purpose.</div>
+      </details>
+      <details class="faq-item">
+        <summary>I'm an academic — do I need to commit a lot of time?</summary>
+        <div class="faq-body">No. Mentors typically commit 2–4 hours a month. You choose the shape of your involvement — weekly check‑ins, thesis supervision, occasional seminars, or asynchronous feedback on written work. Whatever you can offer, a student is waiting for it.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How are HIEN students' degrees recognised?</summary>
+        <div class="faq-body">We partner with universities willing to certify coursework, supervise theses, and in some cases offer formal scholarships or visiting places. For students whose home university is still operating remotely, HIEN provides the academic continuity and supplementary mentorship to keep the degree on track.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Is my donation tax‑deductible?</summary>
+        <div class="faq-body">Mothers of Hind is a UK non‑profit company limited by guarantee. UK donors may be eligible for Gift Aid on donations. Donors in other jurisdictions should consult their local tax advisor. For any documentation or receipt requests, <a href="contact.html">contact our team</a>.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How do I know my sponsorship reached a student?</summary>
+        <div class="faq-body">Each sponsored student receives a welcome from the programme and, where safety allows, sponsors are sent a brief update from the programme team. We protect the privacy of students at all times — names and images are only ever shared with explicit consent.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="cta-band-inner reveal">
+    <p class="eyebrow" style="justify-content: center; color: var(--clr-amber); margin-bottom: var(--s-4);"><span class="rule" style="background: var(--clr-amber);"></span>Stand with a generation</p>
+    <h2 class="display-l">Keep a <em>mind</em> learning. Keep a <em>future</em> possible.</h2>
+    <p>Whether you sponsor a single laptop, partner your institution or volunteer an hour of your expertise — HIEN cannot work without you. Start where you are.</p>
+    <div class="hero-ctas" style="justify-content: center;">
+      <a href="donate.html#heen" class="btn btn-primary btn-lg">Sponsor a laptop</a>
+      <a href="contact.html?subject=HIEN" class="btn btn-secondary btn-lg">Volunteer with HIEN</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><span class="footer-brand-mark">h</span>Mothers of Hind</div>
+        <p class="footer-tagline">A non‑profit rebuilding education, care and dignity for children and families in communities devastated by war — in memory of Hind Rajab.</p>
+        <form class="newsletter-form" style="display: flex; gap: 8px; max-width: 360px;">
+          <input type="email" required placeholder="your@email.com" style="flex:1; padding: 0.8rem 1rem; border-radius: 999px; border: 1px solid rgba(250,246,240,0.2); background: rgba(250,246,240,0.06); color: var(--clr-cream);"/>
+          <button type="submit" class="btn btn-amber btn-sm">Subscribe</button>
+        </form>
+      </div>
+      <div class="footer-col"><h4>Explore</h4><ul>
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li>
+        <li><a href="projects.html">Our Projects</a></li><li><a href="heen.html">HIEN · هيّن</a></li>
+        <li><a href="shop.html">Shop</a></li></ul></div>
+      <div class="footer-col"><h4>Support</h4><ul>
+        <li><a href="donate.html">Donate</a></li><li><a href="donate.html#schools">Sponsor a Student</a></li>
+        <li><a href="donate.html#psychosocial">Psychosocial Care</a></li>
+        <li><a href="heen.html">Laptops for Students</a></li>
+        <li><a href="contact.html">Partner With Us</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4>
+        <ul style="color: rgba(250,246,240,0.7); font-size: 0.92rem; line-height: 1.7;">
+          <li>8 Southlands Avenue,<br/>Eccles, Manchester,<br/>England, M30 7GL</li>
+          <li style="margin-top: 12px;"><a href="mailto:admin@mothersofhind.org">admin@mothersofhind.org</a></li>
+          <li><a href="contact.html">Contact form →</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Mothers of Hind · All rights reserved</span>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/mothersofhind/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+        <a href="https://www.facebook.com/profile.php?id=61572306430591" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3a4 4 0 0 0-4 4v2H8v3h2v7h3v-7h2.5l.5-3H13v-2a1 1 0 0 1 1-1z"/></svg></a>
+        <a href="https://www.linkedin.com/company/mothers-of-hind/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zm-1.5-10.3a1.7 1.7 0 1 1 0-3.4 1.7 1.7 0 0 1 0 3.4zM19 19h-3v-4.7c0-1.1-.4-1.8-1.4-1.8a1.5 1.5 0 0 0-1.4 1 1.9 1.9 0 0 0-.1.7V19h-3v-9h3v1.3A3 3 0 0 1 15.7 10c2 0 3.3 1.3 3.3 4z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

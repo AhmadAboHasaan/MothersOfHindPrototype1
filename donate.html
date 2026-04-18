@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Donate — Mothers of Hind</title>
+  <meta name="description" content="Support Mothers of Hind — fund a child's meal, a student's laptop, a therapist's session. Every donation goes directly to our programmes in Gaza and beyond." />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%236B2737'/%3E%3Ctext x='50' y='68' font-family='serif' font-size='52' font-style='italic' fill='%23FAF6F0' text-anchor='middle'%3Eh%3C/text%3E%3C/svg%3E" />
+  <style>
+    /* Donate form layout */
+    .donate-layout { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+    .donate-panel { background: var(--bg); border: 1px solid var(--clr-border); border-radius: 8px; padding: clamp(1.75rem, 4vw, 3rem); box-shadow: var(--shadow-md); }
+    .donate-panel h2 { font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 500; line-height: 1.2; margin-bottom: var(--s-2); }
+    .donate-panel h2 em { color: var(--accent); font-style: italic; }
+    .donate-panel .desc { color: var(--fg-muted); font-size: 0.98rem; line-height: 1.65; margin-bottom: var(--s-5); }
+
+    .custom-amount { position: relative; margin-top: var(--s-4); }
+    .custom-amount label { display: block; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: var(--fg-muted); margin-bottom: var(--s-2); }
+    .custom-amount .input-wrap { position: relative; }
+    .custom-amount .currency { position: absolute; left: var(--s-4); top: 50%; transform: translateY(-50%); font-family: var(--font-display); font-size: 1.3rem; color: var(--fg-muted); font-weight: 500; }
+    .custom-amount input { width: 100%; padding: 1rem 1rem 1rem 2.5rem; border: 1px solid var(--clr-border); border-radius: 4px; background: var(--bg); font-family: var(--font-display); font-size: 1.3rem; font-weight: 500; color: var(--fg); transition: all var(--t-fast); }
+    .custom-amount input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(107,39,55,0.1); }
+
+    .donate-frequency { display: flex; align-items: center; gap: var(--s-3); margin-top: var(--s-5); padding: var(--s-4); background: var(--clr-cream-warm); border-radius: 4px; }
+    .donate-frequency .gift-icon { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: var(--clr-cream); display: grid; place-items: center; flex-shrink: 0; }
+    .donate-frequency p { font-size: 0.92rem; line-height: 1.55; margin: 0; }
+    .donate-frequency strong { color: var(--accent); }
+
+    .donate-submit { margin-top: var(--s-5); }
+    .donate-submit .btn { width: 100%; padding: 1.1rem; font-size: 1.05rem; }
+    .donate-methods { display: flex; align-items: center; justify-content: center; gap: var(--s-4); margin-top: var(--s-4); flex-wrap: wrap; padding-top: var(--s-4); border-top: 1px dashed var(--clr-border); }
+    .donate-methods small { font-size: 0.78rem; color: var(--fg-muted); letter-spacing: 0.05em; }
+    .method-badge { padding: 6px 12px; border: 1px solid var(--clr-border); border-radius: 4px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; color: var(--fg-muted); background: var(--bg-alt); }
+
+    /* Impact sidebar */
+    .impact-sidebar { position: sticky; top: 100px; }
+    .impact-card { padding: var(--s-6); background: var(--clr-wine); color: var(--clr-cream); border-radius: 8px; overflow: hidden; position: relative; }
+    .impact-card::before { content: ''; position: absolute; top: -30%; right: -30%; width: 80%; height: 100%; background: radial-gradient(circle, rgba(201,149,75,0.18), transparent 60%); pointer-events: none; }
+    .impact-card .title { font-family: var(--font-display); font-size: 1.35rem; font-weight: 500; margin-bottom: var(--s-5); color: var(--clr-cream); position: relative; }
+    .impact-list { list-style: none; padding: 0; margin: 0; position: relative; z-index: 2; }
+    .impact-row-sb { display: grid; grid-template-columns: auto 1fr; gap: var(--s-4); padding: var(--s-4) 0; border-top: 1px solid rgba(250,246,240,0.15); align-items: start; }
+    .impact-row-sb:first-child { border-top: 0; padding-top: 0; }
+    .impact-amount { font-family: var(--font-display); font-style: italic; color: var(--clr-amber); font-size: 1.5rem; font-weight: 400; line-height: 1; min-width: 70px; }
+    .impact-amount small { display: block; font-family: var(--font-body); font-style: normal; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 4px; color: rgba(250,246,240,0.6); font-weight: 500; }
+    .impact-text { color: rgba(250,246,240,0.88); font-size: 0.92rem; line-height: 1.55; }
+
+    /* Cause cards */
+    .causes-detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); margin-top: var(--s-7); }
+    .cause-detail { background: var(--bg); border-radius: 6px; overflow: hidden; border: 1px solid var(--clr-border); transition: all var(--t-med); display: flex; flex-direction: column; }
+    .cause-detail:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .cause-detail-img { aspect-ratio: 16/10; background: linear-gradient(135deg, var(--clr-olive), var(--clr-wine)); position: relative; overflow: hidden; }
+    .cause-detail-img img { width: 100%; height: 100%; object-fit: cover; }
+    .cause-detail-img .tag { position: absolute; top: var(--s-3); left: var(--s-3); padding: 5px 10px; background: var(--clr-cream); color: var(--accent); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; border-radius: var(--r-full); }
+    .cause-detail-body { padding: var(--s-5); display: flex; flex-direction: column; flex: 1; }
+    .cause-detail-body h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 500; margin-bottom: var(--s-3); line-height: 1.2; }
+    .cause-detail-body p { color: var(--fg-muted); line-height: 1.65; font-size: 0.95rem; margin-bottom: var(--s-4); flex: 1; }
+    .cause-amount-bar { display: flex; align-items: baseline; gap: var(--s-2); margin-bottom: var(--s-4); padding-top: var(--s-3); border-top: 1px dashed var(--clr-border); }
+    .cause-amount-bar .a { font-family: var(--font-display); font-size: 1.8rem; font-style: italic; color: var(--accent); line-height: 1; }
+    .cause-amount-bar .l { font-size: 0.82rem; color: var(--fg-muted); }
+    .cause-detail-body .btn { align-self: flex-start; }
+
+    /* Trust strip */
+    .trust-strip { background: var(--clr-cream-warm); padding: clamp(2rem, 4vw, 3rem) 0; border-top: 1px solid var(--clr-border); border-bottom: 1px solid var(--clr-border); }
+    .trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-6); align-items: start; }
+    .trust-item { text-align: center; }
+    .trust-item .icon { width: 44px; height: 44px; border-radius: 50%; background: var(--bg); display: grid; place-items: center; margin: 0 auto var(--s-3); color: var(--accent); border: 1px solid var(--clr-border); }
+    .trust-item h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 500; margin-bottom: 6px; }
+    .trust-item p { font-size: 0.85rem; color: var(--fg-muted); line-height: 1.55; }
+
+    /* Other ways */
+    .ways-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); margin-top: var(--s-7); }
+    .way-card { padding: var(--s-5); border: 1px solid var(--clr-border); border-radius: 6px; transition: all var(--t-med); }
+    .way-card:hover { border-color: var(--accent); background: var(--clr-cream-warm); }
+    .way-card h4 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 500; margin-bottom: var(--s-2); }
+    .way-card p { color: var(--fg-muted); font-size: 0.92rem; line-height: 1.6; margin-bottom: var(--s-3); }
+    .way-card a { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 6px; transition: gap var(--t-fast); }
+    .way-card a:hover { gap: 12px; }
+
+    @media (max-width: 960px) {
+      .donate-layout { grid-template-columns: 1fr; }
+      .impact-sidebar { position: static; }
+      .causes-detail-grid { grid-template-columns: 1fr; }
+      .trust-grid { grid-template-columns: 1fr 1fr; }
+      .ways-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">h</span>
+      <span class="brand-name">Mothers of Hind<small>Hope · Education · Care</small></span>
+    </a>
+    <nav class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="heen.html">HIEN · هيّن</a>
+      <a href="shop.html">Shop</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <a href="donate.html" class="btn btn-primary btn-sm active">Donate</a>
+      <button class="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu">
+  <nav class="mobile-menu-list">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="projects.html">Our Projects</a>
+    <a href="heen.html">HIEN · هيّن</a>
+    <a href="shop.html">Shop</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="mobile-menu-cta">
+    <a href="donate.html" class="btn btn-primary btn-lg" style="width:100%;">Donate Now</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-inner reveal">
+      <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><span>Donate</span></div>
+      <p class="eyebrow"><span class="rule"></span>Stand with us</p>
+      <h1 class="display-xl">Your gift is a <em class="italic-accent text-accent">lifeline.</em></h1>
+      <p class="page-hero-desc">Every donation goes directly into our schools, mental‑health programmes and higher‑education network. One meal. One laptop. One therapy session. One child given back a day of childhood.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DONATE FORM -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="donate-layout">
+      <!-- Left: donation form -->
+      <div class="donate-panel reveal">
+        <div class="donate-tabs" role="tablist">
+          <button class="donate-tab active" data-tab="once" role="tab">Give once</button>
+          <button class="donate-tab" data-tab="monthly" role="tab">Give monthly</button>
+        </div>
+
+        <h2>Choose your <em>impact.</em></h2>
+        <p class="desc">Select an amount below, or enter your own. Every pound moves directly into our programmes — no hidden fees.</p>
+
+        <div class="donate-amounts" id="amountsOnce" data-tab-content="once">
+          <div class="donate-amount" data-amount="10">£10<small>A meal</small></div>
+          <div class="donate-amount selected" data-amount="25">£25<small>Therapy session</small></div>
+          <div class="donate-amount" data-amount="45">£45<small>Child for a month</small></div>
+          <div class="donate-amount" data-amount="100">£100<small>Teacher's week</small></div>
+          <div class="donate-amount" data-amount="300">£300<small>Laptop · HIEN</small></div>
+          <div class="donate-amount" data-amount="custom">Other</div>
+        </div>
+
+        <div class="donate-amounts" id="amountsMonthly" data-tab-content="monthly" style="display:none;">
+          <div class="donate-amount" data-amount="10">£10<small>/month</small></div>
+          <div class="donate-amount selected" data-amount="25">£25<small>/month</small></div>
+          <div class="donate-amount" data-amount="50">£50<small>/month</small></div>
+          <div class="donate-amount" data-amount="100">£100<small>/month</small></div>
+          <div class="donate-amount" data-amount="200">£200<small>/month</small></div>
+          <div class="donate-amount" data-amount="custom">Other</div>
+        </div>
+
+        <div class="custom-amount">
+          <label for="customAmount">Custom amount</label>
+          <div class="input-wrap">
+            <span class="currency">£</span>
+            <input type="number" id="customAmount" placeholder="Enter amount" min="1" step="1"/>
+          </div>
+        </div>
+
+        <div class="donate-frequency">
+          <div class="gift-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+          </div>
+          <p><strong>Gift Aid +25%</strong> — If you're a UK taxpayer, we can claim an extra 25% on your donation at no cost to you. You'll be asked on the next step.</p>
+        </div>
+
+        <div class="donate-submit">
+          <a href="https://buy.stripe.com/14k7vH2fSgx35OMeUV" target="_blank" rel="noopener" class="btn btn-primary btn-lg" id="donateCta">
+            Donate £<span id="ctaAmount">25</span> <span id="ctaFreq"></span> →
+          </a>
+          <div class="donate-methods">
+            <small>Secure checkout via</small>
+            <span class="method-badge">Stripe</span>
+            <span class="method-badge">Card</span>
+            <span class="method-badge">Apple Pay</span>
+            <span class="method-badge">Google Pay</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: impact sidebar -->
+      <aside class="impact-sidebar reveal reveal-delay-1">
+        <div class="impact-card">
+          <h3 class="title">Where every pound goes</h3>
+          <ul class="impact-list">
+            <li class="impact-row-sb">
+              <span class="impact-amount">£10<small>A meal</small></span>
+              <span class="impact-text">Feeds a displaced child a hot, nutritious meal at one of our school kitchens in Gaza.</span>
+            </li>
+            <li class="impact-row-sb">
+              <span class="impact-amount">£25<small>A session</small></span>
+              <span class="impact-text">Covers one psychosocial therapy session with a qualified child psychologist.</span>
+            </li>
+            <li class="impact-row-sb">
+              <span class="impact-amount">£45<small>A month</small></span>
+              <span class="impact-text">Supports a child for a full month at a MoH primary school — schooling, meals, a nurse on site.</span>
+            </li>
+            <li class="impact-row-sb">
+              <span class="impact-amount">£100<small>A teacher</small></span>
+              <span class="impact-text">A week's stipend for one of our qualified teachers working in displaced‑learning centres.</span>
+            </li>
+            <li class="impact-row-sb">
+              <span class="impact-amount">£300<small>A laptop</small></span>
+              <span class="impact-text">Sponsors a HIEN laptop, 12 months of connectivity, and academic mentorship for a university student.</span>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<section class="trust-strip reveal">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h4>Secure by Stripe</h4>
+        <p>PCI‑DSS compliant. We never see your card details.</p>
+      </div>
+      <div class="trust-item">
+        <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 4 12 14.01 9 11.01"/><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/></svg></div>
+        <h4>UK Non‑Profit</h4>
+        <p>Registered as a company limited by guarantee.</p>
+      </div>
+      <div class="trust-item">
+        <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10M6 20V4M18 20v-6"/></svg></div>
+        <h4>Ring‑fenced</h4>
+        <p>You choose the cause — we honour that choice.</p>
+      </div>
+      <div class="trust-item">
+        <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h4>Transparent</h4>
+        <p>Regular reports — where the money went, what it did.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAUSES -->
+<section class="section" id="causes">
+  <div class="container">
+    <div class="reveal" style="max-width: 40em;">
+      <p class="eyebrow"><span class="rule"></span>Choose a cause</p>
+      <h2 class="display-l" style="margin-bottom: var(--s-4);">Direct your gift to the <em class="italic-accent text-accent">work closest to your heart.</em></h2>
+      <p style="color: var(--fg-muted); font-size: 1.05rem; line-height: 1.7;">Prefer your donation to go somewhere specific? Choose a programme. 100% of ring‑fenced gifts are directed to that programme only.</p>
+    </div>
+
+    <div class="causes-detail-grid">
+      <article class="cause-detail reveal" id="schools">
+        <div class="cause-detail-img">
+          <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&q=80&auto=format&fit=crop" alt="Children learning" onerror="this.style.display='none'"/>
+          <span class="tag">Education</span>
+        </div>
+        <div class="cause-detail-body">
+          <h3>MoH Primary Schools</h3>
+          <p>Makeshift classrooms in Gaza giving displaced children structured learning, a hot meal, a nurse on site, and a psychotherapist to hold space for what they carry.</p>
+          <div class="cause-amount-bar">
+            <span class="a">£45</span>
+            <span class="l">supports one child for a month</span>
+          </div>
+          <a href="https://buy.stripe.com/14k7vH2fSgx35OMeUV" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Give to this cause →</a>
+        </div>
+      </article>
+
+      <article class="cause-detail reveal reveal-delay-1" id="heen">
+        <div class="cause-detail-img">
+          <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80&auto=format&fit=crop" alt="University student" onerror="this.style.display='none'"/>
+          <span class="tag">Higher Ed</span>
+        </div>
+        <div class="cause-detail-body">
+          <h3>HIEN · هيّن</h3>
+          <p>Laptops, connectivity and academic mentorship for university students whose studies have been interrupted by war — a bridge to keep degrees alive.</p>
+          <div class="cause-amount-bar">
+            <span class="a">£300</span>
+            <span class="l">sponsors one laptop + mentorship</span>
+          </div>
+          <a href="https://buy.stripe.com/14k7vH2fSgx35OMeUV" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Give to this cause →</a>
+        </div>
+      </article>
+
+      <article class="cause-detail reveal reveal-delay-2" id="psychosocial">
+        <div class="cause-detail-img">
+          <img src="https://images.unsplash.com/photo-1609220136736-443140cffec6?w=600&q=80&auto=format&fit=crop" alt="Therapy and care" onerror="this.style.display='none'"/>
+          <span class="tag">Mental Health</span>
+        </div>
+        <div class="cause-detail-body">
+          <h3>Psychosocial Support</h3>
+          <p>A network of qualified therapists delivering trauma‑informed care to children and families. In Gaza, an estimated 22,500+ children have already lost a parent.</p>
+          <div class="cause-amount-bar">
+            <span class="a">£25</span>
+            <span class="l">funds one therapy session</span>
+          </div>
+          <a href="https://buy.stripe.com/14k7vH2fSgx35OMeUV" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Give to this cause →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- OTHER WAYS -->
+<section class="section" style="background: var(--bg-alt);">
+  <div class="container">
+    <div class="reveal" style="max-width: 40em;">
+      <p class="eyebrow"><span class="rule"></span>Other ways to give</p>
+      <h2 class="display-l" style="margin-bottom: var(--s-4);">Giving is <em class="italic-accent text-accent">more than money.</em></h2>
+      <p style="color: var(--fg-muted); font-size: 1.05rem; line-height: 1.7;">Beyond one‑off donations, there are other meaningful ways to stand with the families we serve.</p>
+    </div>
+
+    <div class="ways-grid">
+      <div class="way-card reveal">
+        <h4>Monthly giving</h4>
+        <p>A regular gift — however small — is what keeps schools running month after month. Predictable income means we can plan teacher salaries and meal programmes without interruption.</p>
+        <a href="#" data-switch-tab="monthly">Switch to monthly above ↑</a>
+      </div>
+      <div class="way-card reveal reveal-delay-1">
+        <h4>Corporate partnerships</h4>
+        <p>Match employee giving, sponsor a classroom, commission bespoke impact reporting, or underwrite a full cohort of laptops. We build partnerships that fit your mission.</p>
+        <a href="contact.html?subject=Corporate%20Partnership">Start a conversation →</a>
+      </div>
+      <div class="way-card reveal reveal-delay-2">
+        <h4>Leave a legacy</h4>
+        <p>Including Mothers of Hind in your will is a profound way to keep a child in school, a student at their desk, or a therapist at a child's side for years to come.</p>
+        <a href="contact.html?subject=Legacy%20Giving">Request information →</a>
+      </div>
+      <div class="way-card reveal">
+        <h4>Fundraise for us</h4>
+        <p>Run a marathon, host a bake sale, dedicate your birthday. Your community can raise funds and awareness together. We'll send you a fundraising pack.</p>
+        <a href="contact.html?subject=Fundraise">Get a pack →</a>
+      </div>
+      <div class="way-card reveal reveal-delay-1">
+        <h4>Gifts in kind</h4>
+        <p>Laptops, educational resources, medical supplies, connectivity hardware — we gratefully accept items our programmes need. We'll verify compatibility before you ship.</p>
+        <a href="contact.html?subject=Gifts%20in%20kind">Offer a donation in kind →</a>
+      </div>
+      <div class="way-card reveal reveal-delay-2">
+        <h4>Volunteer your skills</h4>
+        <p>Whether you're an academic, translator, counsellor, designer, teacher or medic — your hours can go where money alone can't reach.</p>
+        <a href="contact.html?subject=Volunteer">Volunteer your time →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PULLQUOTE / HIND -->
+<section class="section pullquote-section">
+  <div class="container narrow">
+    <div class="pullquote reveal">
+      <p class="eyebrow" style="justify-content: center;"><span class="rule"></span>Why we do this</p>
+      <blockquote>
+        "We are named after <em>Hind Rajab</em> — a five‑year‑old girl who asked for rescue, and did not receive it. Every pound you give is a promise that the next child will not be left waiting alone."
+      </blockquote>
+      <cite>— Mothers of Hind</cite>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><span class="footer-brand-mark">h</span>Mothers of Hind</div>
+        <p class="footer-tagline">A non‑profit rebuilding education, care and dignity for children and families in communities devastated by war — in memory of Hind Rajab.</p>
+        <form class="newsletter-form" style="display: flex; gap: 8px; max-width: 360px;">
+          <input type="email" required placeholder="your@email.com" style="flex:1; padding: 0.8rem 1rem; border-radius: 999px; border: 1px solid rgba(250,246,240,0.2); background: rgba(250,246,240,0.06); color: var(--clr-cream);"/>
+          <button type="submit" class="btn btn-amber btn-sm">Subscribe</button>
+        </form>
+      </div>
+      <div class="footer-col"><h4>Explore</h4><ul>
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li>
+        <li><a href="projects.html">Our Projects</a></li><li><a href="heen.html">HIEN · هيّن</a></li>
+        <li><a href="shop.html">Shop</a></li></ul></div>
+      <div class="footer-col"><h4>Support</h4><ul>
+        <li><a href="donate.html">Donate</a></li><li><a href="donate.html#schools">Sponsor a Student</a></li>
+        <li><a href="donate.html#psychosocial">Psychosocial Care</a></li>
+        <li><a href="heen.html">Laptops for Students</a></li>
+        <li><a href="contact.html">Partner With Us</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4>
+        <ul style="color: rgba(250,246,240,0.7); font-size: 0.92rem; line-height: 1.7;">
+          <li>8 Southlands Avenue,<br/>Eccles, Manchester,<br/>England, M30 7GL</li>
+          <li style="margin-top: 12px;"><a href="mailto:admin@mothersofhind.org">admin@mothersofhind.org</a></li>
+          <li><a href="contact.html">Contact form →</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Mothers of Hind · All rights reserved</span>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/mothersofhind/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+        <a href="https://www.facebook.com/profile.php?id=61572306430591" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3a4 4 0 0 0-4 4v2H8v3h2v7h3v-7h2.5l.5-3H13v-2a1 1 0 0 1 1-1z"/></svg></a>
+        <a href="https://www.linkedin.com/company/mothers-of-hind/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zm-1.5-10.3a1.7 1.7 0 1 1 0-3.4 1.7 1.7 0 0 1 0 3.4zM19 19h-3v-4.7c0-1.1-.4-1.8-1.4-1.8a1.5 1.5 0 0 0-1.4 1 1.9 1.9 0 0 0-.1.7V19h-3v-9h3v1.3A3 3 0 0 1 15.7 10c2 0 3.3 1.3 3.3 4z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+  // Donate CTA sync
+  (function(){
+    const tabs = document.querySelectorAll('.donate-tab');
+    const amountsOnce = document.getElementById('amountsOnce');
+    const amountsMonthly = document.getElementById('amountsMonthly');
+    const custom = document.getElementById('customAmount');
+    const ctaAmount = document.getElementById('ctaAmount');
+    const ctaFreq = document.getElementById('ctaFreq');
+    let currentTab = 'once';
+
+    function updateCta(){
+      const active = document.querySelector(`[data-tab-content="${currentTab}"] .donate-amount.selected`);
+      let val = active ? active.dataset.amount : '25';
+      if (custom.value && Number(custom.value) > 0) val = custom.value;
+      if (val === 'custom') val = custom.value || '25';
+      ctaAmount.textContent = val;
+      ctaFreq.textContent = currentTab === 'monthly' ? '/month' : '';
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentTab = tab.dataset.tab;
+        if (currentTab === 'once') { amountsOnce.style.display = ''; amountsMonthly.style.display = 'none'; }
+        else { amountsOnce.style.display = 'none'; amountsMonthly.style.display = ''; }
+        updateCta();
+      });
+    });
+
+    document.querySelectorAll('.donate-amount').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const parent = btn.closest('.donate-amounts');
+        parent.querySelectorAll('.donate-amount').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        if (btn.dataset.amount !== 'custom') { custom.value = ''; }
+        else { custom.focus(); }
+        updateCta();
+      });
+    });
+
+    custom.addEventListener('input', () => {
+      document.querySelectorAll(`[data-tab-content="${currentTab}"] .donate-amount`).forEach(b => b.classList.remove('selected'));
+      const other = document.querySelector(`[data-tab-content="${currentTab}"] [data-amount="custom"]`);
+      if (other && custom.value) other.classList.add('selected');
+      updateCta();
+    });
+
+    // Cross-link "switch to monthly" in other-ways section
+    document.querySelectorAll('[data-switch-tab]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = el.dataset.switchTab;
+        document.querySelector(`.donate-tab[data-tab="${target}"]`)?.click();
+        window.scrollTo({ top: document.querySelector('.donate-panel').offsetTop - 80, behavior: 'smooth' });
+      });
+    });
+
+    updateCta();
+  })();
+</script>
+</body>
+</html>

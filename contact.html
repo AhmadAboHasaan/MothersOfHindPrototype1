@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Contact — Mothers of Hind</title>
+  <meta name="description" content="Get in touch with Mothers of Hind. Partner with us, volunteer, or ask about our programmes. We respond to every message." />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%236B2737'/%3E%3Ctext x='50' y='68' font-family='serif' font-size='52' font-style='italic' fill='%23FAF6F0' text-anchor='middle'%3Eh%3C/text%3E%3C/svg%3E" />
+  <style>
+    /* Layout */
+    .contact-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+
+    /* Form panel */
+    .contact-form-panel { background: var(--bg); border: 1px solid var(--clr-border); border-radius: 8px; padding: clamp(1.75rem, 4vw, 3rem); box-shadow: var(--shadow-md); }
+    .contact-form-panel h2 { font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 500; line-height: 1.2; margin-bottom: var(--s-2); }
+    .contact-form-panel h2 em { color: var(--accent); font-style: italic; }
+    .contact-form-panel > p { color: var(--fg-muted); font-size: 0.98rem; line-height: 1.65; margin-bottom: var(--s-6); }
+
+    .subject-chips { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-bottom: var(--s-5); }
+    .subject-chip { padding: 6px 14px; border: 1px solid var(--clr-border); border-radius: var(--r-full); background: var(--bg); font-size: 0.82rem; font-weight: 500; cursor: pointer; color: var(--fg); transition: all var(--t-fast); font-family: var(--font-body); }
+    .subject-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .subject-chip.active { background: var(--accent); color: var(--clr-cream); border-color: var(--accent); }
+
+    .form-success { display: none; padding: var(--s-5); background: rgba(107, 127, 92, 0.1); border: 1px solid var(--clr-olive); border-radius: 6px; color: var(--clr-olive-dark); margin-top: var(--s-5); }
+    .form-success.shown { display: block; animation: slideDown 0.4s ease; }
+    .form-success h4 { font-family: var(--font-display); font-size: 1.15rem; margin-bottom: 6px; color: var(--clr-olive-dark); }
+    .form-success p { font-size: 0.92rem; line-height: 1.55; color: var(--fg); margin: 0; }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Side / info */
+    .contact-info-block { padding: var(--s-5) 0; border-bottom: 1px solid var(--clr-border); }
+    .contact-info-block:last-child { border-bottom: 0; }
+    .contact-info-block h4 { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: var(--s-3); display: flex; align-items: center; gap: 10px; }
+    .contact-info-block h4 .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+    .contact-info-block p, .contact-info-block address { font-family: var(--font-display); font-size: 1.15rem; font-style: normal; line-height: 1.55; color: var(--fg); font-weight: 400; margin: 0; }
+    .contact-info-block p small { display: block; font-family: var(--font-body); font-size: 0.85rem; color: var(--fg-muted); margin-top: 6px; line-height: 1.55; font-weight: 400; }
+    .contact-info-block a { color: var(--fg); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color var(--t-fast); }
+    .contact-info-block a:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Hero visual */
+    .contact-visual { aspect-ratio: 4/3; border-radius: 8px; margin-top: var(--s-5); background: var(--clr-wine); color: var(--clr-cream); position: relative; overflow: hidden; display: grid; place-items: center; padding: var(--s-5); text-align: center; }
+    .contact-visual::before { content: ''; position: absolute; top: -40%; right: -20%; width: 60%; height: 140%; background: radial-gradient(circle, rgba(201,149,75,0.2), transparent 60%); pointer-events: none; }
+    .contact-visual::after { content: ''; position: absolute; bottom: -30%; left: -20%; width: 60%; height: 120%; background: radial-gradient(circle, rgba(107,127,92,0.15), transparent 60%); pointer-events: none; }
+    .contact-visual-content { position: relative; z-index: 2; }
+    .contact-visual svg.quote-icon { width: 36px; height: auto; color: var(--clr-amber); margin-bottom: var(--s-3); opacity: 0.8; }
+    .contact-visual blockquote { font-family: var(--font-display); font-style: italic; font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.5; color: var(--clr-cream); margin-bottom: var(--s-3); }
+    .contact-visual cite { font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(250,246,240,0.7); font-style: normal; font-weight: 500; }
+
+    /* Socials row */
+    .socials-row { display: flex; gap: var(--s-3); margin-top: var(--s-3); flex-wrap: wrap; }
+    .social-link { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border: 1px solid var(--clr-border); border-radius: var(--r-full); background: var(--bg); text-decoration: none; color: var(--fg); font-size: 0.88rem; font-weight: 500; transition: all var(--t-fast); }
+    .social-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .social-link svg { color: var(--accent); }
+
+    /* Quick routes (three cards below form) */
+    .route-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); margin-top: var(--s-7); }
+    .route-card { padding: var(--s-5); border-radius: 6px; background: var(--bg); border: 1px solid var(--clr-border); text-align: center; transition: all var(--t-med); display: flex; flex-direction: column; }
+    .route-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .route-card .icon-wrap { width: 52px; height: 52px; border-radius: 50%; background: var(--clr-cream-warm); display: grid; place-items: center; margin: 0 auto var(--s-3); color: var(--accent); }
+    .route-card h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 500; margin-bottom: var(--s-2); }
+    .route-card p { color: var(--fg-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: var(--s-4); flex: 1; }
+    .route-card a { color: var(--accent); font-weight: 600; text-decoration: none; font-size: 0.88rem; }
+    .route-card a:hover { text-decoration: underline; }
+
+    @media (max-width: 960px) {
+      .contact-layout { grid-template-columns: 1fr; }
+      .route-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">h</span>
+      <span class="brand-name">Mothers of Hind<small>Hope · Education · Care</small></span>
+    </a>
+    <nav class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="heen.html">HIEN · هيّن</a>
+      <a href="shop.html">Shop</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <a href="donate.html" class="btn btn-primary btn-sm">Donate</a>
+      <button class="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu">
+  <nav class="mobile-menu-list">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="projects.html">Our Projects</a>
+    <a href="heen.html">HIEN · هيّن</a>
+    <a href="shop.html">Shop</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="mobile-menu-cta">
+    <a href="donate.html" class="btn btn-primary btn-lg" style="width:100%;">Donate Now</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-inner reveal">
+      <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><span>Contact</span></div>
+      <p class="eyebrow"><span class="rule"></span>Say hello</p>
+      <h1 class="display-xl">We'd love to <em class="italic-accent text-accent">hear from you.</em></h1>
+      <p class="page-hero-desc">Partnership enquiries, volunteer offers, media requests, or a simple hello — every message reaches a human on our team. We aim to respond within two working days.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FORM + INFO -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="contact-layout">
+      <!-- Form -->
+      <div class="contact-form-panel reveal">
+        <h2>Send us a <em>message.</em></h2>
+        <p>Tell us a little about you, and what you'd like to discuss. We'll get back to you at the email address you provide.</p>
+
+        <div>
+          <label style="display: block; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: var(--fg-muted); margin-bottom: var(--s-2);">I'm writing about…</label>
+          <div class="subject-chips" id="subjectChips">
+            <button class="subject-chip" data-subject="General enquiry">General enquiry</button>
+            <button class="subject-chip" data-subject="Partnership">Partnership</button>
+            <button class="subject-chip" data-subject="Volunteer">Volunteering</button>
+            <button class="subject-chip" data-subject="HIEN Mentor">HIEN mentorship</button>
+            <button class="subject-chip" data-subject="Media">Media / press</button>
+            <button class="subject-chip" data-subject="Donation">Donation query</button>
+            <button class="subject-chip" data-subject="Shop">Shop / order</button>
+          </div>
+        </div>
+
+        <form id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First name</label>
+              <input type="text" id="fname" class="form-input" required/>
+            </div>
+            <div class="form-group">
+              <label for="lname">Last name</label>
+              <input type="text" id="lname" class="form-input" required/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" id="email" class="form-input" required/>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone <small style="font-weight:400;color:var(--fg-muted);text-transform:none;letter-spacing:0;">(optional)</small></label>
+              <input type="tel" id="phone" class="form-input"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="org">Organisation <small style="font-weight:400;color:var(--fg-muted);text-transform:none;letter-spacing:0;">(optional)</small></label>
+            <input type="text" id="org" class="form-input" placeholder="University, company, charity…"/>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" class="form-input" required placeholder="What can we help with?"/>
+          </div>
+          <div class="form-group">
+            <label for="message">Your message</label>
+            <textarea id="message" class="form-textarea" required placeholder="Tell us a little about who you are and what you'd like to discuss…"></textarea>
+          </div>
+          <div class="form-group" style="display: flex; align-items: start; gap: 10px; margin-bottom: var(--s-5);">
+            <input type="checkbox" id="consent" required style="margin-top: 5px; accent-color: var(--accent);"/>
+            <label for="consent" style="font-size: 0.85rem; letter-spacing: 0; text-transform: none; color: var(--fg-muted); font-weight: 400; line-height: 1.55;">I'm happy for Mothers of Hind to store my details and respond to this enquiry. We never share your data.</label>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; padding: 1.1rem;">Send message →</button>
+          <div class="form-success" id="formSuccess">
+            <h4>Message received — thank you.</h4>
+            <p>A member of our team will reply within two working days. If your enquiry is urgent, please email <a href="mailto:admin@mothersofhind.org" style="color:var(--accent);font-weight:600;">admin@mothersofhind.org</a>.</p>
+          </div>
+        </form>
+      </div>
+
+      <!-- Side info -->
+      <aside class="reveal reveal-delay-1">
+        <div class="contact-info-block">
+          <h4><span class="dot"></span>Email us</h4>
+          <p><a href="mailto:admin@mothersofhind.org">admin@mothersofhind.org</a>
+          <small>For partnerships, media, volunteering and general enquiries.</small></p>
+        </div>
+        <div class="contact-info-block">
+          <h4><span class="dot"></span>Visit / write to us</h4>
+          <address>
+            8 Southlands Avenue,<br/>
+            Eccles, Manchester,<br/>
+            England, M30 7GL<br/>
+            <small>United Kingdom</small>
+          </address>
+        </div>
+        <div class="contact-info-block">
+          <h4><span class="dot"></span>Follow our work</h4>
+          <div class="socials-row">
+            <a class="social-link" href="https://www.instagram.com/mothersofhind/" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg>
+              Instagram
+            </a>
+            <a class="social-link" href="https://www.facebook.com/profile.php?id=61572306430591" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3a4 4 0 0 0-4 4v2H8v3h2v7h3v-7h2.5l.5-3H13v-2a1 1 0 0 1 1-1z"/></svg>
+              Facebook
+            </a>
+            <a class="social-link" href="https://www.linkedin.com/company/mothers-of-hind/" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zm-1.5-10.3a1.7 1.7 0 1 1 0-3.4 1.7 1.7 0 0 1 0 3.4zM19 19h-3v-4.7c0-1.1-.4-1.8-1.4-1.8a1.5 1.5 0 0 0-1.4 1 1.9 1.9 0 0 0-.1.7V19h-3v-9h3v1.3A3 3 0 0 1 15.7 10c2 0 3.3 1.3 3.3 4z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+        <div class="contact-info-block">
+          <h4><span class="dot"></span>Response time</h4>
+          <p>Within 2 working days.
+          <small>We read every message. If you haven't heard back by the third day, please do check your spam folder and feel free to nudge us.</small></p>
+        </div>
+
+        <!-- Decorative quote -->
+        <div class="contact-visual">
+          <div class="contact-visual-content">
+            <svg class="quote-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 14h4v4c0 1.1-.9 2-2 2H4v2h3c2.2 0 4-1.8 4-4V8H4v6zm12 0h4v4c0 1.1-.9 2-2 2h-2v2h3c2.2 0 4-1.8 4-4V8h-7v6z"/>
+            </svg>
+            <blockquote>A simple message from you can become a meal, a lesson, or a therapy session for a child. Thank you for reaching out.</blockquote>
+            <cite>— The MoH team</cite>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK ROUTES -->
+<section class="section" style="background: var(--bg-alt); padding-top: var(--s-8); padding-bottom: var(--s-8);">
+  <div class="container">
+    <div class="reveal" style="text-align: center; max-width: 36em; margin: 0 auto;">
+      <p class="eyebrow" style="justify-content: center;"><span class="rule"></span>Looking for something specific?</p>
+      <h2 class="display-l">Quick <em class="italic-accent text-accent">routes.</em></h2>
+    </div>
+
+    <div class="route-grid">
+      <div class="route-card reveal">
+        <div class="icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Volunteer with HIEN</h3>
+        <p>Academics, professors and postgraduates — offer a few hours a month mentoring a student whose studies were interrupted.</p>
+        <a href="heen.html#involve">Visit HIEN page →</a>
+      </div>
+      <div class="route-card reveal reveal-delay-1">
+        <div class="icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>Media &amp; press</h3>
+        <p>For interviews, quotes and press packs, email us directly with your outlet, deadline and angle — we'll get back to you quickly.</p>
+        <a href="mailto:admin@mothersofhind.org?subject=Media%20Request">Email media desk →</a>
+      </div>
+      <div class="route-card reveal reveal-delay-2">
+        <div class="icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h3>Donation support</h3>
+        <p>Receipts, Gift Aid questions, recurring‑giving changes or corporate partnerships — our finance team is here to help.</p>
+        <a href="mailto:admin@mothersofhind.org?subject=Donation%20Query">Email finance team →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="cta-band-inner reveal">
+    <h2 class="display-l">Prefer to act <em>now?</em></h2>
+    <p>If your message can wait — but a child's meal cannot — you can stand with us today, in under a minute.</p>
+    <div class="hero-ctas" style="justify-content: center;">
+      <a href="donate.html" class="btn btn-primary btn-lg">Donate</a>
+      <a href="heen.html" class="btn btn-secondary btn-lg">Sponsor a laptop</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><span class="footer-brand-mark">h</span>Mothers of Hind</div>
+        <p class="footer-tagline">A non‑profit rebuilding education, care and dignity for children and families in communities devastated by war — in memory of Hind Rajab.</p>
+        <form class="newsletter-form" style="display: flex; gap: 8px; max-width: 360px;">
+          <input type="email" required placeholder="your@email.com" style="flex:1; padding: 0.8rem 1rem; border-radius: 999px; border: 1px solid rgba(250,246,240,0.2); background: rgba(250,246,240,0.06); color: var(--clr-cream);"/>
+          <button type="submit" class="btn btn-amber btn-sm">Subscribe</button>
+        </form>
+      </div>
+      <div class="footer-col"><h4>Explore</h4><ul>
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li>
+        <li><a href="projects.html">Our Projects</a></li><li><a href="heen.html">HIEN · هيّن</a></li>
+        <li><a href="shop.html">Shop</a></li></ul></div>
+      <div class="footer-col"><h4>Support</h4><ul>
+        <li><a href="donate.html">Donate</a></li><li><a href="donate.html#schools">Sponsor a Student</a></li>
+        <li><a href="donate.html#psychosocial">Psychosocial Care</a></li>
+        <li><a href="heen.html">Laptops for Students</a></li>
+        <li><a href="contact.html">Partner With Us</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4>
+        <ul style="color: rgba(250,246,240,0.7); font-size: 0.92rem; line-height: 1.7;">
+          <li>8 Southlands Avenue,<br/>Eccles, Manchester,<br/>England, M30 7GL</li>
+          <li style="margin-top: 12px;"><a href="mailto:admin@mothersofhind.org">admin@mothersofhind.org</a></li>
+          <li><a href="contact.html">Contact form →</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Mothers of Hind · All rights reserved</span>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/mothersofhind/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+        <a href="https://www.facebook.com/profile.php?id=61572306430591" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3a4 4 0 0 0-4 4v2H8v3h2v7h3v-7h2.5l.5-3H13v-2a1 1 0 0 1 1-1z"/></svg></a>
+        <a href="https://www.linkedin.com/company/mothers-of-hind/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zm-1.5-10.3a1.7 1.7 0 1 1 0-3.4 1.7 1.7 0 0 1 0 3.4zM19 19h-3v-4.7c0-1.1-.4-1.8-1.4-1.8a1.5 1.5 0 0 0-1.4 1 1.9 1.9 0 0 0-.1.7V19h-3v-9h3v1.3A3 3 0 0 1 15.7 10c2 0 3.3 1.3 3.3 4z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+  // Subject chips + prefill from URL (?subject=Foo)
+  (function(){
+    const chips = document.querySelectorAll('.subject-chip');
+    const subjectInput = document.getElementById('subject');
+    const form = document.getElementById('contactForm');
+    const success = document.getElementById('formSuccess');
+
+    chips.forEach(chip => {
+      chip.addEventListener('click', (e) => {
+        e.preventDefault();
+        chips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        if (subjectInput && !subjectInput.value) subjectInput.value = chip.dataset.subject;
+        else if (subjectInput) subjectInput.value = chip.dataset.subject;
+      });
+    });
+
+    // Prefill from ?subject=
+    const params = new URLSearchParams(window.location.search);
+    const pre = params.get('subject');
+    if (pre) {
+      const match = document.querySelector(`.subject-chip[data-subject="${pre}"]`);
+      if (match) match.click();
+      else if (subjectInput) subjectInput.value = pre.replace(/\+/g,' ').replace(/%20/g,' ');
+    }
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Basic client-side validation
+        const email = document.getElementById('email').value.trim();
+        const msg = document.getElementById('message').value.trim();
+        const consent = document.getElementById('consent').checked;
+        if (!email || !msg || !consent) {
+          alert('Please complete the required fields and consent box.');
+          return;
+        }
+        // Demo: in production, wire to form endpoint (Formspree, Netlify, own backend)
+        success.classList.add('shown');
+        form.style.display = 'none';
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+  })();
+</script>
+</body>
+</html>

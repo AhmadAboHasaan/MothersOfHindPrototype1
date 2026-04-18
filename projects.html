@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Our Projects — Mothers of Hind</title>
+  <meta name="description" content="Education, psychosocial support, advocacy and sponsorship programmes designed to create lasting change in communities affected by war." />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%236B2737'/%3E%3Ctext x='50' y='68' font-family='serif' font-size='52' font-style='italic' fill='%23FAF6F0' text-anchor='middle'%3Eh%3C/text%3E%3C/svg%3E" />
+  <style>
+    /* Project category nav */
+    .project-nav { display: flex; gap: 0; border-bottom: 1px solid var(--clr-border); margin-bottom: 3rem; flex-wrap: wrap; }
+    .project-nav a { padding: var(--s-4) var(--s-5); font-weight: 600; font-size: 0.9rem; color: var(--fg-muted); border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all var(--t-fast); letter-spacing: 0.02em; }
+    .project-nav a:hover { color: var(--fg); }
+    .project-nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .project-nav a span { opacity: 0.5; margin-left: 8px; font-size: 0.8em; font-family: var(--font-display); font-style: italic; }
+
+    /* Project hero card */
+    .project-hero { position: relative; aspect-ratio: 21/9; border-radius: 4px; overflow: hidden; background: var(--clr-paper); margin-bottom: var(--s-7); box-shadow: var(--shadow-md); }
+    .project-hero-img { position: absolute; inset: 0; background-size: cover; background-position: center; }
+    .project-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(43,31,28,0.85) 0%, rgba(43,31,28,0.4) 60%, transparent 100%); }
+    .project-hero-content { position: absolute; left: 0; bottom: 0; padding: var(--s-7); color: var(--clr-cream); max-width: 36rem; }
+    .project-hero-tag { font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--clr-amber-light); font-weight: 600; margin-bottom: var(--s-3); }
+    .project-hero-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.25rem); font-weight: 400; line-height: 1.1; margin-bottom: var(--s-3); }
+
+    /* Initiative cards (sub-projects within categories) */
+    .initiative { padding: var(--s-7) 0; border-top: 1px solid var(--clr-border); }
+    .initiative:first-child { border-top: 0; padding-top: 0; }
+    .init-header { display: flex; align-items: baseline; gap: var(--s-5); margin-bottom: var(--s-5); flex-wrap: wrap; }
+    .init-num { font-family: var(--font-display); font-style: italic; font-size: 4rem; font-weight: 300; color: var(--accent); line-height: 1; flex-shrink: 0; }
+    .init-title { flex: 1; min-width: 260px; }
+    .init-title h3 { font-family: var(--font-display); font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 400; line-height: 1.15; margin-bottom: var(--s-2); }
+    .init-subtitle { font-size: 0.9rem; color: var(--fg-muted); letter-spacing: 0.04em; }
+
+    .init-content { display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--s-7); margin-top: var(--s-6); }
+    .init-content p { color: var(--fg-muted); line-height: 1.75; margin-bottom: var(--s-4); font-size: 1.02rem; }
+    .init-content .lead { color: var(--fg); font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; line-height: 1.45; margin-bottom: var(--s-5); font-style: italic; }
+
+    .init-visual { aspect-ratio: 4/5; border-radius: 4px; overflow: hidden; background: var(--clr-paper); position: sticky; top: 100px; }
+    .init-visual img { width: 100%; height: 100%; object-fit: cover; }
+
+    .init-highlights { margin-top: var(--s-5); }
+    .init-highlights .high-item { display: flex; gap: var(--s-4); padding: var(--s-4) 0; border-bottom: 1px solid var(--clr-border); }
+    .init-highlights .high-item:last-child { border-bottom: 0; }
+    .init-highlights .high-icon { width: 44px; height: 44px; border-radius: 50%; background: var(--clr-cream-warm); color: var(--accent); display: grid; place-items: center; flex-shrink: 0; }
+    .init-highlights h5 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; margin-bottom: 4px; }
+    .init-highlights p { font-size: 0.9rem; margin: 0; color: var(--fg-muted); line-height: 1.55; }
+
+    /* Impact row */
+    .impact-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--s-5); padding: var(--s-6) 0; margin-top: var(--s-6); border-top: 1px solid var(--clr-border); border-bottom: 1px solid var(--clr-border); }
+    .impact-cell { padding: 0 var(--s-4); border-right: 1px solid var(--clr-border); }
+    .impact-cell:last-child { border-right: 0; }
+    .impact-num { font-family: var(--font-display); font-size: 2.25rem; font-weight: 400; color: var(--accent); line-height: 1; margin-bottom: var(--s-2); }
+    .impact-label { font-size: 0.82rem; color: var(--fg-muted); line-height: 1.4; }
+
+    .category-section { padding: var(--s-9) 0; }
+    .category-section:nth-child(even) { background: var(--bg-alt); }
+
+    @media (max-width: 900px) {
+      .init-content { grid-template-columns: 1fr; }
+      .init-visual { position: static; max-width: 520px; margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a href="index.html" class="brand"><span class="brand-mark">h</span><span class="brand-name">Mothers of Hind<small>Hope · Education · Care</small></span></a>
+    <nav class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="heen.html">HIEN · هيّن</a>
+      <a href="shop.html">Shop</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <a href="donate.html" class="btn btn-primary btn-sm">Donate</a>
+      <button class="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu">
+  <nav class="mobile-menu-list">
+    <a href="index.html">Home</a><a href="about.html">About Us</a>
+    <a href="projects.html">Our Projects</a><a href="heen.html">HIEN · هيّن</a>
+    <a href="shop.html">Shop</a><a href="contact.html">Contact</a>
+  </nav>
+  <div class="mobile-menu-cta"><a href="donate.html" class="btn btn-primary btn-lg" style="width:100%;">Donate Now</a></div>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-inner reveal">
+      <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><span>Our Projects</span></div>
+      <p class="eyebrow"><span class="rule"></span>Programmes designed with communities</p>
+      <h1 class="display-xl">Our <em class="italic-accent text-accent">projects.</em></h1>
+      <p class="page-hero-desc">
+        Our programmes address the most pressing needs of communities affected by war and conflict — focusing on education, health & well‑being, advocacy and sponsorship to create lasting, meaningful change in the lives of children and families.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORY NAV -->
+<div class="container" style="margin-top: 3rem;">
+  <nav class="project-nav reveal">
+    <a href="#education" class="active">Education <span>01</span></a>
+    <a href="#psychosocial">Psychosocial Support <span>02</span></a>
+    <a href="#advocacy">Advocacy & Awareness <span>03</span></a>
+  </nav>
+</div>
+
+<!-- ============== EDUCATION ============== -->
+<section class="category-section" id="education">
+  <div class="container">
+    <div class="project-hero reveal">
+      <div class="project-hero-img" style="background-image: url('https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=1600&q=80&auto=format&fit=crop');"></div>
+      <div class="project-hero-overlay"></div>
+      <div class="project-hero-content">
+        <p class="project-hero-tag">01 · Education</p>
+        <h2 class="project-hero-title">Empowering the next generation <em class="italic-accent">through learning.</em></h2>
+        <p style="color: rgba(250,246,240,0.85); line-height: 1.6; font-size: 1rem;">Mothers of Hind is working to rebuild education in Gaza across two complementary initiatives — from foundational primary schooling to higher‑education continuity.</p>
+      </div>
+    </div>
+
+    <!-- Initiative 1: Primary Schools -->
+    <article class="initiative reveal">
+      <div class="init-header">
+        <div class="init-num">01</div>
+        <div class="init-title">
+          <h3>The Mothers of Hind School Series</h3>
+          <p class="init-subtitle">Makeshift primary schools · Gaza · Flagship programme</p>
+        </div>
+      </div>
+
+      <div class="init-content">
+        <div>
+          <p class="lead">Through this initiative, MoH establishes makeshift schools for primary‑stage students — equipped with physical classrooms, desks and textbooks — ensuring children once again have access to foundational education.</p>
+
+          <p>Recognising that education in Gaza must not ignore the trauma of the past 15 months, MoH offers comprehensive support beyond academics. This includes hot meals, winter clothing, and on‑site medical care through a dedicated nurse and psychotherapist.</p>
+
+          <p>Understanding the profound trauma that students carry as they return to school in the aftermath of genocide, we are committed to creating a safe, nurturing space that addresses both their educational and psychological well‑being.</p>
+
+          <div class="init-highlights">
+            <div class="high-item">
+              <div class="high-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              </div>
+              <div>
+                <h5>Physical classrooms & textbooks</h5>
+                <p>Proper learning environments with desks, teaching materials and core curriculum texts.</p>
+              </div>
+            </div>
+            <div class="high-item">
+              <div class="high-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3.1 6.3L22 9.3l-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9L2 9.3l6.9-1z"/></svg>
+              </div>
+              <div>
+                <h5>Hot meals & winter clothing</h5>
+                <p>Because learning cannot happen on an empty stomach or in the cold.</p>
+              </div>
+            </div>
+            <div class="high-item">
+              <div class="high-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </div>
+              <div>
+                <h5>On‑site nurse & psychotherapist</h5>
+                <p>Integrated medical and psychological support — not optional add‑ons, but core infrastructure.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="init-visual">
+          <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80&auto=format&fit=crop" alt="Children learning" onerror="this.style.background='linear-gradient(135deg, var(--clr-olive), var(--clr-wine))'; this.src='';"/>
+        </div>
+      </div>
+
+      <div class="impact-row">
+        <div class="impact-cell"><div class="impact-num">£45</div><div class="impact-label">Sponsors a primary student per month</div></div>
+        <div class="impact-cell"><div class="impact-num">£180</div><div class="impact-label">Supports one teacher per month</div></div>
+        <div class="impact-cell"><div class="impact-num">100%</div><div class="impact-label">Of donations reach the programme</div></div>
+        <div class="impact-cell"><div class="impact-num">Hot</div><div class="impact-label">Meals served every school day</div></div>
+      </div>
+    </article>
+
+    <!-- Initiative 2: HIEN -->
+    <article class="initiative reveal" id="hien">
+      <div class="init-header">
+        <div class="init-num">02</div>
+        <div class="init-title">
+          <h3>Hind's Higher Education Network <span class="arabic" style="color: var(--accent); font-style: normal; font-size: 0.85em;">— هيّن</span></h3>
+          <p class="init-subtitle">HIEN · Global academic network · Open‑access platform</p>
+        </div>
+      </div>
+
+      <div class="init-content">
+        <div>
+          <p class="lead">MoH is uniting a global network of academics to provide expertise, teaching materials and recorded lectures for students across all higher‑education disciplines.</p>
+
+          <p>This initiative seeks to bridge the severe educational gaps caused by the genocide, ensuring students in Gaza have access to high‑quality learning resources despite the destruction of universities and ongoing disruptions to their studies.</p>
+
+          <p>In close collaboration with Higher Education authorities in Gaza, we are developing an extensive online platform to serve as a central repository of academic knowledge — offering tailored support to both students and educators in war‑affected regions.</p>
+
+          <p>The platform will not only provide course materials but also facilitate mentorship, research collaboration and academic networking, helping to sustain and rebuild the intellectual and professional aspirations of Gaza's youth. By leveraging global academic solidarity, MoH aims to create the <strong style="color: var(--fg);">largest open‑access database of higher‑education resources</strong> dedicated to supporting those whose education has been forcibly interrupted by conflict.</p>
+
+          <p style="margin-top: var(--s-5);"><a href="heen.html" class="btn-arrow">Discover HIEN · هيّن <span>→</span></a></p>
+        </div>
+
+        <div class="init-visual">
+          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80&auto=format&fit=crop" alt="Students studying" onerror="this.style.background='linear-gradient(135deg, var(--clr-amber), var(--clr-wine-dark))'; this.src='';"/>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============== PSYCHOSOCIAL ============== -->
+<section class="category-section" id="psychosocial">
+  <div class="container">
+    <div class="project-hero reveal">
+      <div class="project-hero-img" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1600&q=80&auto=format&fit=crop');"></div>
+      <div class="project-hero-overlay"></div>
+      <div class="project-hero-content">
+        <p class="project-hero-tag">02 · Psychosocial Support</p>
+        <h2 class="project-hero-title">Restoring hope <em class="italic-accent">through care.</em></h2>
+        <p style="color: rgba(250,246,240,0.85); line-height: 1.6; font-size: 1rem;">Physical rehabilitation receives urgent attention, but the psychological toll demands equal urgency. We are building the infrastructure to address it.</p>
+      </div>
+    </div>
+
+    <article class="initiative reveal">
+      <div class="init-header">
+        <div class="init-num">01</div>
+        <div class="init-title">
+          <h3>A psychotherapist network for Gaza</h3>
+          <p class="init-subtitle">After‑school hubs · External specialists · Capacity‑building</p>
+        </div>
+      </div>
+
+      <div class="init-content">
+        <div>
+          <p class="lead">While the world focuses on physical rehabilitation, the psychological toll demands just as much urgency. Both adults and children face severe anxiety, suicidal thoughts and regressive behaviours.</p>
+
+          <p>International organisations estimate <strong style="color: var(--fg);">22,500+ individuals in Gaza now live with life‑altering injuries</strong> (WHO), and the mental‑health challenges go deeper still (ReliefWeb).</p>
+
+          <p>Mothers of Hind is addressing the psychosocial crisis in Gaza by establishing a psychotherapist network connecting external specialists with those providing care on the ground. Building on the Mothers of Hind School Series, after school hours we transform school premises into hubs for psychological support — where psychotherapists can receive training and access internet connectivity to strengthen their capacity.</p>
+
+          <div class="init-highlights">
+            <div class="high-item">
+              <div class="high-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+              </div>
+              <div>
+                <h5>Adult & child therapy</h5>
+                <p>Trauma‑informed support for families, educators and frontline workers in Gaza.</p>
+              </div>
+            </div>
+            <div class="high-item">
+              <div class="high-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 6H7a5 5 0 0 0 0 10h10a5 5 0 0 0 0-10z"/><circle cx="17" cy="11" r="2"/></svg>
+              </div>
+              <div>
+                <h5>Capacity building</h5>
+                <p>Training and peer‑supervision for local psychotherapists, via secure online connections.</p>
+              </div>
+            </div>
+            <div class="high-item">
+              <div class="high-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <div>
+                <h5>Safe evening hubs</h5>
+                <p>Classrooms become safe therapy spaces after school hours — reusing infrastructure efficiently.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="init-visual">
+          <img src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=800&q=80&auto=format&fit=crop" alt="Mother and child" onerror="this.style.background='linear-gradient(135deg, var(--clr-wine), var(--clr-olive))'; this.src='';"/>
+        </div>
+      </div>
+
+      <div class="impact-row">
+        <div class="impact-cell"><div class="impact-num">22.5k+</div><div class="impact-label">People in Gaza with life‑altering injuries (WHO)</div></div>
+        <div class="impact-cell"><div class="impact-num">£25</div><div class="impact-label">One therapy session for a child</div></div>
+        <div class="impact-cell"><div class="impact-num">£200</div><div class="impact-label">Monthly psychosocial package</div></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============== ADVOCACY ============== -->
+<section class="category-section" id="advocacy">
+  <div class="container">
+    <div class="project-hero reveal">
+      <div class="project-hero-img" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1600&q=80&auto=format&fit=crop');"></div>
+      <div class="project-hero-overlay"></div>
+      <div class="project-hero-content">
+        <p class="project-hero-tag">03 · Advocacy & Awareness</p>
+        <h2 class="project-hero-title">Raising voices for <em class="italic-accent">those who can't be heard.</em></h2>
+        <p style="color: rgba(250,246,240,0.85); line-height: 1.6; font-size: 1rem;">We amplify the voices of those affected by war, bringing their stories to light and advocating for meaningful change.</p>
+      </div>
+    </div>
+
+    <div class="init-content reveal">
+      <div>
+        <p class="lead">Advocacy is not an afterthought — it is the foundation on which all our other programmes stand. Without awareness, there is no solidarity. Without solidarity, there is no rebuilding.</p>
+
+        <p>We organise campaigns to raise awareness about the impact of conflict, and collaborate with media outlets to highlight stories of resilience and survival — always in partnership with the people whose stories we tell.</p>
+
+        <div class="init-highlights">
+          <div class="high-item">
+            <div class="high-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+            </div>
+            <div>
+              <h5>Awareness campaigns</h5>
+              <p>Strategic campaigns about the impact of conflict on children and families.</p>
+            </div>
+          </div>
+          <div class="high-item">
+            <div class="high-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <div>
+              <h5>Media collaborations</h5>
+              <p>Highlighting stories of resilience and survival across trusted media outlets.</p>
+            </div>
+          </div>
+          <div class="high-item">
+            <div class="high-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div>
+              <h5>Events & speaking</h5>
+              <p>Public talks, convenings and speaking engagements that keep the conversation alive.</p>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top: var(--s-6);">
+          <span style="display: block; margin-bottom: var(--s-3); color: var(--fg-muted);">Follow our campaigns:</span>
+          <a href="https://www.instagram.com/mothersofhind/" target="_blank" class="btn btn-secondary btn-sm" style="margin-right: 8px;">Instagram</a>
+          <a href="https://www.facebook.com/profile.php?id=61572306430591" target="_blank" class="btn btn-secondary btn-sm" style="margin-right: 8px;">Facebook</a>
+          <a href="https://www.linkedin.com/company/mothers-of-hind/" target="_blank" class="btn btn-secondary btn-sm">LinkedIn</a>
+        </p>
+      </div>
+
+      <div class="init-visual">
+        <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&q=80&auto=format&fit=crop" alt="Advocacy" onerror="this.style.background='linear-gradient(135deg, var(--clr-wine-dark), var(--clr-amber))'; this.src='';"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="cta-band-inner reveal">
+    <h2 class="display-l">Every project begins <em>with one donation.</em></h2>
+    <p>Choose a programme that speaks to you. Your contribution becomes textbooks, therapy sessions, meals, or laptops — each one a small seed of hope.</p>
+    <div class="hero-ctas" style="justify-content: center;">
+      <a href="donate.html" class="btn btn-primary btn-lg">Donate Now</a>
+      <a href="contact.html" class="btn btn-secondary btn-lg">Partner With Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><span class="footer-brand-mark">h</span>Mothers of Hind</div>
+        <p class="footer-tagline">A non‑profit rebuilding education, care and dignity for children and families in communities devastated by war — in memory of Hind Rajab.</p>
+        <form class="newsletter-form" style="display: flex; gap: 8px; max-width: 360px;">
+          <input type="email" required placeholder="your@email.com" style="flex:1; padding: 0.8rem 1rem; border-radius: 999px; border: 1px solid rgba(250,246,240,0.2); background: rgba(250,246,240,0.06); color: var(--clr-cream);"/>
+          <button type="submit" class="btn btn-amber btn-sm">Subscribe</button>
+        </form>
+      </div>
+      <div class="footer-col"><h4>Explore</h4><ul>
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li>
+        <li><a href="projects.html">Our Projects</a></li><li><a href="heen.html">HIEN · هيّن</a></li>
+        <li><a href="shop.html">Shop</a></li></ul></div>
+      <div class="footer-col"><h4>Support</h4><ul>
+        <li><a href="donate.html">Donate</a></li><li><a href="donate.html#schools">Sponsor a Student</a></li>
+        <li><a href="donate.html#psychosocial">Psychosocial Care</a></li>
+        <li><a href="heen.html">Laptops for Students</a></li>
+        <li><a href="contact.html">Partner With Us</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4>
+        <ul style="color: rgba(250,246,240,0.7); font-size: 0.92rem; line-height: 1.7;">
+          <li>8 Southlands Avenue,<br/>Eccles, Manchester,<br/>England, M30 7GL</li>
+          <li style="margin-top: 12px;"><a href="mailto:admin@mothersofhind.org">admin@mothersofhind.org</a></li>
+          <li><a href="contact.html">Contact form →</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Mothers of Hind · All rights reserved</span>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/mothersofhind/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+        <a href="https://www.facebook.com/profile.php?id=61572306430591" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3a4 4 0 0 0-4 4v2H8v3h2v7h3v-7h2.5l.5-3H13v-2a1 1 0 0 1 1-1z"/></svg></a>
+        <a href="https://www.linkedin.com/company/mothers-of-hind/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zm-1.5-10.3a1.7 1.7 0 1 1 0-3.4 1.7 1.7 0 0 1 0 3.4zM19 19h-3v-4.7c0-1.1-.4-1.8-1.4-1.8a1.5 1.5 0 0 0-1.4 1 1.9 1.9 0 0 0-.1.7V19h-3v-9h3v1.3A3 3 0 0 1 15.7 10c2 0 3.3 1.3 3.3 4z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+  // Active project tab based on scroll
+  const tabs = document.querySelectorAll('.project-nav a');
+  const sections = [document.getElementById('education'), document.getElementById('psychosocial'), document.getElementById('advocacy')];
+  const updateActive = () => {
+    const sy = window.scrollY + 200;
+    let active = 0;
+    sections.forEach((s, i) => { if (s && s.offsetTop <= sy) active = i; });
+    tabs.forEach((t, i) => t.classList.toggle('active', i === active));
+  };
+  window.addEventListener('scroll', updateActive, { passive: true });
+</script>
+</body>
+</html>
