@@ -9,14 +9,14 @@
 /* -------- Design Tokens -------- */
 :root {
   /* Palette — warm earth-tones echoing olive groves and dignity */
-  --clr-wine: #6B2737;          /* deep burgundy — memorial, dignity */
-  --clr-wine-dark: #4A1924;
-  --clr-wine-light: #8B3B4E;
-  --clr-olive: #6B7F5C;         /* olive — Palestinian heritage, peace */
-  --clr-olive-dark: #4F5F42;
-  --clr-olive-light: #8DA07B;
-  --clr-amber: #C9954B;         /* warm amber — hope, golden hour */
-  --clr-amber-light: #E0B878;
+  --clr-wine: #33471f;          /* deep burgundy — memorial, dignity */
+  --clr-wine-dark: #243316;
+  --clr-wine-light: #557535;
+  --clr-olive: #6f8c3b;         /* olive — Palestinian heritage, peace */
+  --clr-olive-dark: #4b6229;
+  --clr-olive-light: #9db967;
+  --clr-amber: #f5b047;         /* warm amber — hope, golden hour */
+  --clr-amber-light: #ffd086;
   --clr-cream: #FAF6F0;         /* cream background */
   --clr-cream-warm: #F5ECE0;    /* warmer cream */
   --clr-paper: #EFE6D8;         /* subtle paper tone */
@@ -512,3 +512,14 @@ input, textarea, select { font: inherit; color: inherit; }
 .col-8 { grid-column: span 8; }
 .col-12 { grid-column: span 12; }
 @media (max-width: 768px) { .col-6, .col-4, .col-8 { grid-column: span 12; } }
+
+
+/* -------- Instagram feed -------- */
+.instagram-feed .ig-status { color: var(--fg-muted); margin-bottom: 1rem; font-size: .95rem; }
+.ig-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 1rem; }
+.ig-card { border:1px solid var(--clr-border); border-radius: var(--r-md); overflow:hidden; background:#fff; box-shadow: var(--shadow-sm);}
+.ig-card img { width:100%; aspect-ratio:1/1; object-fit:cover; }
+.ig-card a { display:block; padding:.65rem .8rem; font-size:.84rem; color:var(--accent); font-weight:600; }
+.brand-mark { width: 48px; height: 48px; font-size: .72rem; font-style: normal; font-weight: 700; letter-spacing: .04em; background: linear-gradient(135deg,var(--clr-amber),var(--clr-olive)); color:#1a1a1a; }
+.brand-mark img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.ig-post .ig-post-img{background-size:cover;background-position:center;}
