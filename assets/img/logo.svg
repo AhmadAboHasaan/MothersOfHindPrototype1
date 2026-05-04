@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Mothers of Hind logo">
+  <rect width="512" height="512" rx="32" fill="#F7F2E8"/>
+  <circle cx="256" cy="235" r="138" fill="#F5B047"/>
+  <path d="M126 196c30-57 84-95 130-95s100 38 130 95" fill="none" stroke="#6F8C3B" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="256" cy="235" r="78" fill="#6F8C3B"/>
+  <path d="M220 302c16-22 57-22 73 0" stroke="#2B1F1C" stroke-width="11" fill="none" stroke-linecap="round"/>
+  <text x="256" y="450" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-size="56" fill="#2B1F1C" font-weight="700">MOTHERS OF HIND</text>
+</svg>

@@ -166,3 +166,24 @@
   });
 
 })();
+
+/* ---------- Instagram feed via local API ---------- */
+(() => {
+  const section = document.querySelector('#instagram-feed-live');
+  if (!section) return;
+  const grid = section.querySelector('.ig-grid');
+  if (!grid) return;
+
+  fetch('/api/instagram')
+    .then(r => r.json())
+    .then(data => {
+      const posts = Array.isArray(data.posts) ? data.posts.slice(0, 9) : [];
+      if (!posts.length) return;
+      grid.innerHTML = posts.map((post, i) => `
+        <a href="${post.permalink}" target="_blank" rel="noopener" class="ig-post reveal reveal-delay-${i%4}">
+          <div class="ig-post-img" style="background-image:url('${post.media_url}')"></div>
+          <div class="ig-post-overlay"><span class="ig-stat">Instagram</span></div>
+        </a>`).join('');
+    })
+    .catch(() => {});
+})();
